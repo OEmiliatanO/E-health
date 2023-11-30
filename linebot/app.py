@@ -111,7 +111,7 @@ def handle_postback(event):
     userId = event.source.user_id
     if event.postback.data == 'action=selectDateTime':
         reserved_date = event.postback.params['date']
-        Reservation(None,userId)
+        Reservation(Doctor.getAllDoctor()[0],userId,note="None",time=reserved_date)
         Reservation.toJson()
         send_msg = TextSendMessage(text=f"Your reservation is succeed: {reserved_date}")
         line_bot_api.reply_message(event.reply_token, send_msg)

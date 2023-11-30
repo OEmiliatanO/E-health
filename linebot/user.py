@@ -59,6 +59,14 @@ class Doctor(User): # 需要密碼，其他身分資訊不需要
         self.name = name
         self.appendUser()
 
+    @staticmethod
+    def getAllDoctor():
+        allDoctor = []
+        for user in User.allUsers:
+            if user.permission == "doctor":
+                allDoctor.append(user)
+        return allDoctor
+
 class Patient(User): # 不需要密碼，但需要身分資訊
     def __init__(self, name, birth_date, id_number, phone, blood_type=None, emergency_contact=None,
                  emergency_contact_phone=None, email=None, height=None, weight=None,
