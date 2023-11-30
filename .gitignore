@@ -1,2 +1,4 @@
 *.elf
 *.exe
+*.o
+*.out
