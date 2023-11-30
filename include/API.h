@@ -34,9 +34,9 @@ public:
 class DB_API
 {
 public:
-    static std::string DB_path, Image_DB_path;
-    static meta_DB_t *DB, *IDB;
-    static patient_info_t load_info(std::string UID, Status_t& status)
+    std::string DB_path, Image_DB_path;
+    meta_DB_t *DB, *IDB;
+    patient_info_t load_info(std::string UID, Status_t& status)
     {
         status = Status_t::OK;
         if (DB->connect() == Status_t::OK)
@@ -45,7 +45,7 @@ public:
         return patient_info_t{};
     }
 
-    static void write_back(std::string UID, const patient_info_t& new_info, Status_t& status)
+    void write_back(std::string UID, const patient_info_t& new_info, Status_t& status)
     {
         status = Status_t::OK;
         if (DB->connect() == Status_t::OK)
@@ -53,7 +53,7 @@ public:
         else
             status = Status_t::Error;
     }
-    static void set_DB(meta_DB_t *DB_, std::string DB_p, Status_t& status)
+    void set_DB(meta_DB_t *DB_, std::string DB_p, Status_t& status)
     {
         if (DB != nullptr) delete DB;
         DB_path = DB_p;
@@ -61,7 +61,7 @@ public:
         DB->set_DB_dir(DB_p);
         status = DB->connect();
     }
-    static void set_Image_DB(meta_DB_t *IDB_, std::string IDB_p, Status_t& status)
+    void set_Image_DB(meta_DB_t *IDB_, std::string IDB_p, Status_t& status)
     {
         if (IDB != nullptr) delete IDB;
         Image_DB_path = IDB_p;
@@ -179,7 +179,8 @@ public:
                     reports.set_prescription(res);
             }
             reports.set_numerical_records(numerical_report);
-            med_record.set_reports(reports);
+            med_record.reports = reports;
+            reports_t re = med_record.reports;
             med_records.emplace_back(med_record);
         }
         info.set_med_records(med_records);

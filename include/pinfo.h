@@ -33,6 +33,15 @@ public:
         this->diagnosis = another.get_diagnosis();
         this->prescription = another.get_prescription();
     }
+    reports_t& operator=(const reports_t& another)
+    {
+        this->images_records = another.get_images_records();
+        this->numerical_records = another.get_numerical_records();
+        this->lab_report = another.get_lab_report();
+        this->diagnosis = another.get_diagnosis();
+        this->prescription = another.get_prescription();
+        return *this;
+    }
 
     std::vector<bin_image_t> get_images_records() const
     {
@@ -80,15 +89,22 @@ public:
 class med_record_t
 {
 private:
+public:
     std::tm date;
     reports_t reports;
-public:
     med_record_t() = default;
     med_record_t(std::tm date, reports_t reports): date{date}, reports{reports} {}
     med_record_t(const med_record_t& another)
     {
         this->date = another.get_date();
         this->reports = another.get_reports();
+    }
+    med_record_t& operator=(const med_record_t& another)
+    {
+        this->date = another.get_date();
+        this->reports = another.get_reports();
+
+        return *this;
     }
     std::tm get_date() const
     {
@@ -111,13 +127,23 @@ public:
 class patient_info_t
 {
 private:
-    std::tm birth_date, last_update_time;
     std::string UID, name;
+    std::tm birth_date, last_update_time;
     std::vector<med_record_t> med_records;
 public:
     patient_info_t() = default;
     patient_info_t(std::string UID): UID{UID} {}
     patient_info_t(std::string UID, std::string name): UID{UID}, name{name} {}
+    patient_info_t(std::string UID, 
+            std::string name, 
+            std::tm birth_date, 
+            std::tm last_update_time, 
+            std::vector<med_record_t> med_records): 
+        UID{UID}, 
+        name{name}, 
+        birth_date{birth_date},
+        last_update_time{last_update_time},
+        med_records{med_records} {}
     patient_info_t(const patient_info_t& another)
     {
         this->birth_date = another.get_birth_date();
@@ -125,6 +151,16 @@ public:
         this->UID = another.UID;
         this->name = another.name;
         this->med_records = another.med_records;
+    }
+    patient_info_t& operator=(const patient_info_t& another)
+    {
+        this->birth_date = another.get_birth_date();
+        this->last_update_time = another.get_last_update_time();
+        this->UID = another.UID;
+        this->name = another.name;
+        this->med_records = another.med_records;
+
+        return *this;
     }
 
     std::string get_UID() const
