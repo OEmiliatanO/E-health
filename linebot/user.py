@@ -125,8 +125,11 @@ class Message:
 
     def reply(self, message_info):
         from app import line_bot_api
+        from linebot.models import TextSendMessage
         import msg_templates
-        send_msg = msg_templates.get_sender_message(self.recipient.name, "Replied: \""+self.content+"\"\n\n"+message_info)
+        send_msg = TextSendMessage(text="Your previous message:\n\""+self.content+"\"")
+        line_bot_api.push_message(self.sender.line_userid, messages=send_msg)
+        send_msg = msg_templates.get_sender_message(self.recipient.name, "Replied:\n\""+message_info+"\"")
         line_bot_api.push_message(self.sender.line_userid, messages=send_msg)
 
     @staticmethod
@@ -212,21 +215,25 @@ class Reservation:
         return Reservation.allReservation
 
 if __name__ == "__main__":
-    doctor = Doctor(name="John Doe", line_userid="123", password="password")
-    patient = Patient(name="Kappa", birth_date="0903", id_number="A1111", phone="0999", line_userid="0091")
-    doctor.toJson()
-    print(doctor.loadJson())
-    doctor.toJson()
+    # doctor = Doctor(name="TestDoctor", line_userid="dr.test.id", password="dr.test.pass")
+    # patient = Patient(name="TestPatient", birth_date="0916", id_number="T123", phone="test", line_userid="pt.test.id")
+    # doctor.toJson()
+    # print(doctor.loadJson())
+    # doctor.toJson()
 
-    Message("0091", "0091", "HelloWorld")
-    p = Message("0091", "0091", "HelloWorld")
-    Message("0091", "123", "HelloWorld")
-    p.toJson()
-    p.loadJson()
-    p.toJson()
+    # Message("dr.test.id", "pt.test.id", "Hello World 1")
+    # Message("dr.test.id", "pt.test.id", "Test Hello 2")
+    # Message.toJson()
+    # Message.loadJson()
+    # Message.toJson()
 
-    Reservation(doctor,patient,"Haha")
-    Reservation("123","0091","Bitch")
-    Reservation.toJson()
-    print(Reservation.loadJson())
-    Reservation.toJson()
+    # Reservation(doctor,patient,"Test info1")
+    # Reservation("dr.test.id","pt.test.id","Test info2")
+    # Reservation.toJson()
+    # print(Reservation.loadJson())
+    # Reservation.toJson()
+
+    User.loadJson()
+    Message.loadJson()
+    Reservation.loadJson()
+    Message.allMessage[2].reply("What is YOUR PROBLEM!!!")

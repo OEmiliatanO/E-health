@@ -1,20 +1,20 @@
 [
   {
-    "line_userid": "123",
+    "line_userid": "dr.test.id",
     "information": null,
     "permission": "doctor",
-    "password": "password",
-    "name": "John Doe"
+    "password": "dr.test.pass",
+    "name": "TestDoctor"
   },
   {
-    "line_userid": "0091",
+    "line_userid": "pt.test.id",
     "information": null,
     "permission": "patient",
     "password": null,
-    "name": "Kappa",
-    "birth_date": "0903",
-    "id_number": "A1111",
-    "phone": "0999",
+    "name": "TestPatient",
+    "birth_date": "0916",
+    "id_number": "T123",
+    "phone": "test",
     "blood_type": null,
     "emergency_contact": null,
     "emergency_contact_phone": null,
@@ -22,6 +22,24 @@
     "height": null,
     "weight": null,
     "medical_history": null,
+    "notes": null
+  },
+  {
+    "line_userid": "Ufc4c95ce42186b6965c5f684fa38c1a1",
+    "information": null,
+    "permission": "patient",
+    "password": null,
+    "name": "FishYu",
+    "birth_date": "1001",
+    "id_number": "A13301124",
+    "phone": "0987331763",
+    "blood_type": "B",
+    "emergency_contact": "CH",
+    "emergency_contact_phone": "0966534812",
+    "email": "sun@gmail.com",
+    "height": "165",
+    "weight": "60",
+    "medical_history": "Height problem",
     "notes": null
   }
 ]
