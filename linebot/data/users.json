@@ -1,0 +1,27 @@
+[
+  {
+    "line_userid": "123",
+    "information": null,
+    "permission": "doctor",
+    "password": "password",
+    "name": "John Doe"
+  },
+  {
+    "line_userid": "0091",
+    "information": null,
+    "permission": "patient",
+    "password": null,
+    "name": "Kappa",
+    "birth_date": "0903",
+    "id_number": "A1111",
+    "phone": "0999",
+    "blood_type": null,
+    "emergency_contact": null,
+    "emergency_contact_phone": null,
+    "email": null,
+    "height": null,
+    "weight": null,
+    "medical_history": null,
+    "notes": null
+  }
+]

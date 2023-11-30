@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Webpage</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            max-width: 300px;
+            margin: auto;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        select, textarea {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 12px;
+            box-sizing: border-box;
+        }
+
+        input[type="button"] {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        input[type="button"]:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <form id="myForm" method="post" action="{{ url_for('message_request', line_userid=line_userid) }}">
+        <label for="options">Select an option:</label>
+        <select name="options" id="options">
+            {% for item in items %}
+                <option value="{{ item }}">{{ item }}</option>
+            {% endfor %}
+        </select>
+        <br>
+        <label for="content">Enter content:</label>
+        <textarea name="content" id="content" rows="6"></textarea>
+        <br>
+        <input type="button" value="Submit" onclick="submitForm()">
+    </form>
+
+    <script>
+        function submitForm() {
+            var options = document.getElementById('options').value;
+            var content = document.getElementById('content').value;
+
+            // 將內容加密成 base64
+            var encodedContent = btoa(content);
+
+            // 將加密後的內容設置為隱藏的 input
+            var hiddenInput = document.createElement('input');
+            hiddenInput.type = 'hidden';
+            hiddenInput.name = 'encoded_content';
+            hiddenInput.value = encodedContent;
+
+            // 添加隱藏的 input 到表單中
+            document.getElementById('myForm').appendChild(hiddenInput);
+
+            // 提交表單
+            document.getElementById('myForm').submit();
+        }
+    </script>
+</body>
+</html>
