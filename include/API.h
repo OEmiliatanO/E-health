@@ -33,9 +33,10 @@ public:
 
 class DB_API
 {
-public:
+private:
     std::string DB_path, Image_DB_path;
     meta_DB_t *DB, *IDB;
+public:
     patient_info_t load_info(std::string UID, Status_t& status)
     {
         status = Status_t::OK;
