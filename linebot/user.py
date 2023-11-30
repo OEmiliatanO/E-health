@@ -21,9 +21,12 @@ class User:
         self.password = password
 
     def getLoginState(self, password): # 確認密碼有沒有對
-        if password == None or password == self.password:
-            return True
-        else:
+        try:
+            if password == None or password == self.password:
+                return True
+            else:
+                return False
+        except:
             return False
         
     def appendUser(self): # 把自己加入allUser裡面，用Doctor跟Patient時會自己做
