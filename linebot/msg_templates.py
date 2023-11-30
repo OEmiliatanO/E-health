@@ -40,10 +40,43 @@ def get_send_reserve_message(user_id):
                 }
             )
 
+def get_send_doctortalk_message(website, user_id):
+    return FlexSendMessage(
+    alt_text='Contact Doctor',
+    contents={
+        "type": "bubble",
+        "hero": {
+            "type": "image",
+            "url": "https://i.imgur.com/9CtW1zP.jpg",
+            "size": "full",
+            "aspectRatio": "16:9",
+            "aspectMode": "cover",
+        },
+        "body": {
+            "type": "box",
+            "layout": "vertical",
+            "contents": [
+                {
+                    "type": "text",
+                    "text": "Send Message",
+                    "weight": "bold",
+                    "color": "#0000FF",
+                    "action": {
+                        "type": "uri",
+                        "uri": website+'/message/'+user_id,
+                    },
+                }
+            ]
+        }
+    }
+)
+
+
+
 def get_sender_message(senderName, text):
     return TextSendMessage(
             text=text,
             sender=Sender(
                 name=senderName,
-                icon_url="https://i.imgur.com/xhw2cc2.png")
+                icon_url="https://i.imgur.com/idgTfea.png")
         )

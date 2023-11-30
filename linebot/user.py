@@ -1,6 +1,10 @@
 import json
 from datetime import datetime, timedelta
 
+class UserNotFoundException(Exception):
+    "Raised when target user not found"
+    pass
+
 class User:
     allUsers = [] # 儲存所有的 User
     def __init__(self, line_userid, permission, information=None): # init
@@ -89,7 +93,7 @@ class Patient(User): # 不需要密碼，但需要身分資訊
 
 class Message: 
     allMessage = [] # 儲存所有現有的Message物件
-    def __init__(self, recipient, sender, content, time=None):
+    def __init__(self, recipient:Doctor, sender:Patient, content, time=None):
         self.time = datetime.now().strftime("%Y-%m-%d %H:%M:%S") if time==None else time
         self.content = content
         if type(sender) == type(str()):
@@ -115,6 +119,12 @@ class Message:
         print(f"Recipient: {self.recipient}")
         print(f"Sender: {self.sender}")
         print(f"Content: {self.content}")
+
+    def reply(self, message_info):
+        from app import line_bot_api
+        import msg_templates
+        send_msg = msg_templates.get_sender_message(self.recipient.name, "Replied: \""+self.content+"\"\n\n"+message_info)
+        line_bot_api.push_message(self.sender.line_userid, messages=send_msg)
 
     @staticmethod
     def toJson(path="./data/messages.json"): # 打包成Json，User的Obj是用line userid存

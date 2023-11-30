@@ -3,6 +3,7 @@ from linebot import LineBotApi, WebhookHandler
 from linebot.exceptions import InvalidSignatureError
 from linebot.models import *
 from utils import *
+from user import *
 import msg_templates
 import os
 import base64
@@ -10,27 +11,32 @@ import base64
 CHANNEL_SECRET = "904aca20c4045a8d34bb285cb96ead79"
 CHANNEL_ACCESS_TOKEN = "P4kyLQq9aSYYlMtpLEsSM4oD2bG3oMk8RfL29Baf2BUWLLRQMf/4QdKKam46fVQXpZeL3By9GzS8VZgjB0LTdvSTIOt8foBIt5cn0nyFgwkoZNq4r7bsewFuw0OIINgenaeQ/FvJYwd2XLZ+lzRq9wdB04t89/1O/w1cDnyilFU="
 WEBSITE = "https://867f-61-227-117-60.ngrok-free.app"
+RESPONSE_TEXT = """Thank you for reaching out to us. We appreciate your message. Unfortunately, we are unable to provide a specific response at this time.
+\nIf you have a medical concern or require assistance, please click on the \"Contact Doctor\" button for personalized support."""
 
 app = Flask(__name__, template_folder="templates")
 
 line_bot_api = LineBotApi(CHANNEL_ACCESS_TOKEN)
 handler = WebhookHandler(CHANNEL_SECRET)
 
-d = {}
-
 @app.route('/message/<line_userid>', methods=['GET', 'POST'])
 def message_request(line_userid):
-    items = ['Option 1', 'Option 2', 'Option 3']
+    items = []
+    doctors = []
+    for user in User.allUsers:
+        if user.permission == "doctor":
+            doctors.append(user)
+            items.append("Dr. "+user.name)
 
     if request.method == 'POST':
         selected_option = request.form.get('options')
         encoded_content = request.form.get('encoded_content')
-        print(line_userid, selected_option, encoded_content, sep='\n')
-
+        decoded_bytes = base64.b64decode(encoded_content)
+        Message(doctors[items.index(selected_option)], info_check(line_userid), decoded_bytes.decode('utf-8'))
+        Message.toJson()
         return render_template('messages_confirmation.html')
 
     return render_template('messages.html', line_userid=line_userid, items=items)
-
 
 
 @app.route('/register/<line_userid>', methods=['GET', 'POST'])
@@ -49,7 +55,16 @@ def index(line_userid):
         weight = request.form.get('weight')
         medical_history = request.form.get('medical_history')
         notes = request.form.get('notes')
-        d[line_userid] = name
+        lineuid = line_userid
+        try:
+            Patient(
+                name= name, birth_date=birth_date, id_number=id_number, phone=phone, blood_type=blood_type,
+                emergency_contact= emergency_contact, emergency_contact_phone=emergency_contact_phone,
+                email=email, height=height, weight=weight, medical_history=medical_history, notes=notes, line_userid=lineuid
+            )
+            User.toJson()
+        except:
+            return render_template("Oops, something error. Please try again.")
         return render_template("register_confirmation.html", name=name)
     return render_template("register.html", line_userid=line_userid)
 
@@ -68,30 +83,41 @@ def callback():
 def handle_message(event):
     userId = event.source.user_id
     msg = event.message.text
-    if msg == "!reg":
-        button = msg_templates.get_register_button(WEBSITE, userId)
-        line_bot_api.reply_message(event.reply_token, button)
-    elif msg=='!reserve':
-        send_msg = msg_templates.get_send_reserve_message(userId)
-        line_bot_api.reply_message(event.reply_token, send_msg)
-    elif msg=="!talk":
-        send_msg = msg_templates.get_sender_message("Dr. Lin", "You got cancer.")
-        line_bot_api.reply_message(event.reply_token, send_msg)
-    elif userId in d.keys():
-        send_msg = TextSendMessage(text=f"Your name is {d[userId]}")
-        line_bot_api.reply_message(event.reply_token, send_msg)
-    else:
-        send_msg = TextSendMessage(text=f"Your user id is {userId}")
-        line_bot_api.reply_message(event.reply_token, send_msg)
+    reply_token = event.reply_token
+    try:
+        if msg == "!reg":
+            button = msg_templates.get_register_button(WEBSITE, userId)
+            line_bot_api.reply_message(reply_token, button)
+        elif msg=='!reserve':
+            if not info_check(userId):
+                raise UserNotFoundException("!reserve")
+            send_msg = msg_templates.get_send_reserve_message(userId)
+            line_bot_api.reply_message(reply_token, send_msg)
+        elif msg=="!talk":
+            if not info_check(userId):
+                raise UserNotFoundException("!reserve")
+            send_msg = msg_templates.get_send_doctortalk_message(WEBSITE,userId)
+            line_bot_api.reply_message(reply_token, send_msg)
+
+        else:
+            send_msg = TextSendMessage(text=RESPONSE_TEXT)
+            line_bot_api.reply_message(reply_token, send_msg)
+    except UserNotFoundException:
+        send_msg = TextSendMessage(text="Please register first.")
+        line_bot_api.reply_message(reply_token, send_msg)
 
 @handler.add(PostbackEvent)
 def handle_postback(event):
     userId = event.source.user_id
     if event.postback.data == 'action=selectDateTime':
         reserved_date = event.postback.params['date']
-        reserve_data(reserved_date,userId)
+        Reservation(None,userId)
+        Reservation.toJson()
         send_msg = TextSendMessage(text=f"Your reservation is succeed: {reserved_date}")
         line_bot_api.reply_message(event.reply_token, send_msg)
 
 if __name__ == "__main__":
+    User.loadJson()
+    Message.loadJson()
+    Reservation.loadJson()
     app.run()
