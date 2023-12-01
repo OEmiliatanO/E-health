@@ -39,7 +39,7 @@ public:
         this->DB_p->set_DB_dir(DB_path);
         status = this->DB_p->connect();
     }
-    void set_image_db(meta_DB_t *IDB_p, std::string IDB_path, Status_t& status)
+    void set_IDB(meta_DB_t *IDB_p, std::string IDB_path, Status_t& status)
     {
         if (this->DB_p != nullptr) delete this->DB_p;
         this->IDB_path = IDB_path;
@@ -57,7 +57,7 @@ public:
     constexpr static std::string_view LiteSQL = "LiteSQL";
     constexpr static std::string_view MySQL = "MySQL";
 
-    static meta_DB_t create(std::string_view which_DB)
+    static meta_DB_t* create(std::string_view which_DB)
     {
         if (which_DB == plain_text_DB)
             return new Plain_text_DB_t();
