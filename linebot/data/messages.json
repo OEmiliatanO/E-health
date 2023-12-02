@@ -1,20 +1,14 @@
 [
   {
-    "time": "2023-12-01 01:24:54",
+    "time": "2023-12-03 00:48:21",
     "content": "Hello World 1",
     "sender": "pt.test.id",
     "recipient": "dr.test.id"
   },
   {
-    "time": "2023-12-01 01:24:54",
+    "time": "2023-12-03 00:48:21",
     "content": "Test Hello 2",
     "sender": "pt.test.id",
-    "recipient": "dr.test.id"
-  },
-  {
-    "time": "2023-12-01 01:29:09",
-    "content": "Hello , I am too handsome. Help me!",
-    "sender": "Ufc4c95ce42186b6965c5f684fa38c1a1",
     "recipient": "dr.test.id"
   }
 ]

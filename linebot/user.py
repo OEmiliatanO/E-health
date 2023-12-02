@@ -223,25 +223,27 @@ class Reservation:
         return Reservation.allReservation
 
 if __name__ == "__main__":
-    # doctor = Doctor(name="TestDoctor", line_userid="dr.test.id", password="dr.test.pass")
-    # patient = Patient(name="TestPatient", birth_date="0916", id_number="T123", phone="test", line_userid="pt.test.id")
-    # doctor.toJson()
-    # print(doctor.loadJson())
-    # doctor.toJson()
+    doctor = Doctor(name="TestDoctor", line_userid="dr.test.id", password="dr.test.pass")
+    Doctor(name="Dohn Joe", line_userid="123", password="password")
+    patient = Patient(name="TestPatient", birth_date="0916", id_number="T123", phone="test", line_userid="pt.test.id")
+    Patient(name="Kappa", birth_date="1001", id_number="A131", phone="phone", line_userid="Ufc4c95ce42186b6965c5f684fa38c1a1")
+    doctor.toJson()
+    print(doctor.loadJson())
+    doctor.toJson()
 
-    # Message("dr.test.id", "pt.test.id", "Hello World 1")
-    # Message("dr.test.id", "pt.test.id", "Test Hello 2")
-    # Message.toJson()
-    # Message.loadJson()
-    # Message.toJson()
-
-    # Reservation(doctor,patient,"Test info1")
-    # Reservation("dr.test.id","pt.test.id","Test info2")
-    # Reservation.toJson()
-    # print(Reservation.loadJson())
-    # Reservation.toJson()
-
-    User.loadJson()
+    Message("dr.test.id", "pt.test.id", "Hello World 1")
+    Message("dr.test.id", "pt.test.id", "Test Hello 2")
+    Message.toJson()
     Message.loadJson()
-    Reservation.loadJson()
-    Message.allMessage[2].reply("What is YOUR PROBLEM!!!")
+    Message.toJson()
+
+    Reservation(doctor,patient,"Test info1")
+    Reservation("dr.test.id","pt.test.id","Test info2")
+    Reservation.toJson()
+    print(Reservation.loadJson())
+    Reservation.toJson()
+
+    # User.loadJson()
+    # Message.loadJson()
+    # Reservation.loadJson()
+    # Message.allMessage[2].reply("What is YOUR PROBLEM!!!")

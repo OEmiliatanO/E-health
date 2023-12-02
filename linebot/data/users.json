@@ -7,6 +7,13 @@
     "name": "TestDoctor"
   },
   {
+    "line_userid": "123",
+    "information": null,
+    "permission": "doctor",
+    "password": "password",
+    "name": "Dohn Joe"
+  },
+  {
     "line_userid": "pt.test.id",
     "information": null,
     "permission": "patient",
@@ -29,17 +36,17 @@
     "information": null,
     "permission": "patient",
     "password": null,
-    "name": "FishYu",
+    "name": "Kappa",
     "birth_date": "1001",
-    "id_number": "A13301124",
-    "phone": "0987331763",
-    "blood_type": "B",
-    "emergency_contact": "CH",
-    "emergency_contact_phone": "0966534812",
-    "email": "sun@gmail.com",
-    "height": "165",
-    "weight": "60",
-    "medical_history": "Height problem",
+    "id_number": "A131",
+    "phone": "phone",
+    "blood_type": null,
+    "emergency_contact": null,
+    "emergency_contact_phone": null,
+    "email": null,
+    "height": null,
+    "weight": null,
+    "medical_history": null,
     "notes": null
   }
 ]
