@@ -4,6 +4,7 @@
 #include <string>
 #include <vector>
 #include <map>
+#include <memory>
 #include "pinfo.h"
 
 class CheckerModule{
@@ -11,7 +12,6 @@ public:
     void check_last(patient_info_t& patient_info){
         size_t med_records_size = patient_info.get_med_records().size();
         check(patient_info, med_records_size-1);
-
     }
     void check_all(patient_info_t& patient_info){
         size_t med_records_size = patient_info.get_med_records().size();
@@ -79,47 +79,51 @@ public:
 class Preprocessor{
 public:
     Preprocessor() = default;
-    Preprocessor(std::vector<CheckerModule>& checkers_,patient_info_t& patient_info_):
-        checkers{std::vector<CheckerModule>()},
-        patient_info{patient_info_}
-    {
-        checkers.resize(checkers_.size());
-        for(int i=0;i < checkers_.size() ; ++i){
-            checkers[i] = checkers_[i];
-        }
-    }
-    Preprocessor(std::vector<CheckerModule>&& checkers_,patient_info_t& patient_info_):
-        checkers{checkers_},
+    //I'm not sure I should provide copy constructor or not. The C++ doesn't want me to do that
+
+    // Preprocessor(std::vector<std::unique_ptr<CheckerModule>>& checkers_, patient_info_t& patient_info_):
+    // patient_info{patient_info_}
+    // {
+    //     checkers.reserve(checkers_.size());
+    //     for (auto& checker : checkers_) {
+    //         checkers.emplace_back(std::make_unique<CheckerModule>(*checker));
+    //     }
+    // }
+
+    Preprocessor(std::vector<std::unique_ptr<CheckerModule>>&& checkers_,patient_info_t& patient_info_):
+        checkers{std::move(checkers_)},
         patient_info{patient_info_}
     {};
-    Preprocessor& operator=(Preprocessor& another){
-        patient_info=another.get_patient_info();
-        checkers=another.get_checkers();
-        return *this;
-    }
+
+    // Preprocessor& operator=(Preprocessor& another){
+    //     patient_info=another.get_patient_info();
+    //     checkers=std::move(another.get_checkers());
+    //     return *this;
+    // }
     //Preprocess
+
     patient_info_t preprocess_last(){ 
         for(auto& x:checkers){
-            x.check_last(patient_info);
+            x->check_last(patient_info);
         }
         return patient_info;
     }
     patient_info_t preprocess(int idx){
         for(auto& x:checkers){
-            x.check(patient_info,idx);
+            x->check(patient_info,idx);
         }
         return patient_info;
 
     }
     patient_info_t preprocess_all(){
         for(auto& x:checkers){
-            x.check_all(patient_info);
+            x->check_all(patient_info);
         }
         return patient_info;
     }
-    //Checkers Editting
-    void append_checker(CheckerModule& checker){
-        checkers.emplace_back(checker);
+    // Checkers Editting
+    void move_checker(std::unique_ptr<CheckerModule> checker){
+        checkers.emplace_back(std::move(checker));
     }
     void remove_checker(){
         checkers.pop_back();
@@ -128,21 +132,23 @@ public:
         checkers.clear();
     }
     //Get and Set
-    std::vector<CheckerModule> get_checkers(){
-        return checkers;
-    }
+
+    //Same reason
+    // std::vector<std::unique_ptr<CheckerModule>>& get_checkers(){
+    //     return checkers;
+    // }
     patient_info_t get_patient_info(){
         return patient_info;
     }
     void set_patient_info(patient_info_t& patient_info_){
         patient_info = patient_info_;
     }
-    void set_checkers(std::vector<CheckerModule>& checkers_){
-        checkers = checkers_;
+    void set_checkers(std::vector<std::unique_ptr<CheckerModule>>& checkers_){
+        checkers = std::move(checkers_);
     }
     
 private:
-    std::vector<CheckerModule> checkers;
+    std::vector<std::unique_ptr<CheckerModule>> checkers;
     patient_info_t patient_info;
 };
 
