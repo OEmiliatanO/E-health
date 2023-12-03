@@ -1,4 +1,4 @@
-import json
+import json, os
 from ..include.API import *
 from ..include.pinfo import med_record_t, patient_info_t
 from datetime import datetime, timedelta
@@ -90,26 +90,20 @@ class Patient(User): # 不需要密碼，但需要身分資訊
         self.notes = notes
         self.appendUser()
 
-    def getInfo(self) -> patient_info_t:
+    def getInfo(self, path="../DB/central_DB") -> patient_info_t: # 謝承翰的UID為身分證字號(id_number)
         api = DB_API()
-        api.set_DB(DB_factory.create(DB_factory.plain_text_DB), "../DB/central_DB")
+        api.set_DB(DB_factory.create(DB_factory.plain_text_DB), path)
         info = api.load_info(self.id_number)
         return info
     
-    def createInfo(self, pinfo) -> None:
+    def createInfo(self, pinfo, path="../DB/central_DB") -> None: # 謝承翰的UID為身分證字號(id_number)
         api = DB_API()
-        api.set_DB(DB_factory.create(DB_factory.plain_text_DB), "../DB/central_DB")
+        api.set_DB(DB_factory.create(DB_factory.plain_text_DB), path)
         api.write_back(self.id_number, pinfo)
 
-    def detectDiabetes(self):
-        pass #沒做
-
-    def detectBMI(self):
-        pass
-
-    def detectHeartRate(self):
-        pass
-
+    def detectLab(self, exe_file="../call_lab", dignose_file="../DB/diagnose/"):
+        cmd = exe_file+" "+dignose_file+self.id_number+".info"+" "+self.id_number
+        os.system(cmd)
 
     def display_info(self):
         print(f"Name: {self.name}")
