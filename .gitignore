@@ -2,4 +2,5 @@
 *.exe
 *.o
 *.out
+.vscode/
 __pycache__
