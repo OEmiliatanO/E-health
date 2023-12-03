@@ -1,4 +1,6 @@
 import json
+from ..include.API import *
+from ..include.pinfo import med_record_t, patient_info_t
 from datetime import datetime, timedelta
 
 class UserNotFoundException(Exception):
@@ -87,6 +89,27 @@ class Patient(User): # 不需要密碼，但需要身分資訊
         self.medical_history = medical_history
         self.notes = notes
         self.appendUser()
+
+    def getInfo(self) -> patient_info_t:
+        api = DB_API()
+        api.set_DB(DB_factory.create(DB_factory.plain_text_DB), "../DB/central_DB")
+        info = api.load_info(self.id_number)
+        return info
+    
+    def createInfo(self, pinfo) -> None:
+        api = DB_API()
+        api.set_DB(DB_factory.create(DB_factory.plain_text_DB), "../DB/central_DB")
+        api.write_back(self.id_number, pinfo)
+
+    def detectDiabetes(self):
+        pass #沒做
+
+    def detectBMI(self):
+        pass
+
+    def detectHeartRate(self):
+        pass
+
 
     def display_info(self):
         print(f"Name: {self.name}")
