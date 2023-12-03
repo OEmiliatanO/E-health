@@ -1,0 +1,52 @@
+[
+  {
+    "line_userid": "dr.test.id",
+    "information": null,
+    "permission": "doctor",
+    "password": "dr.test.pass",
+    "name": "TestDoctor"
+  },
+  {
+    "line_userid": "123",
+    "information": null,
+    "permission": "doctor",
+    "password": "password",
+    "name": "Dohn Joe"
+  },
+  {
+    "line_userid": "pt.test.id",
+    "information": null,
+    "permission": "patient",
+    "password": null,
+    "name": "TestPatient",
+    "birth_date": "0916",
+    "id_number": "T123",
+    "phone": "test",
+    "blood_type": null,
+    "emergency_contact": null,
+    "emergency_contact_phone": null,
+    "email": null,
+    "height": null,
+    "weight": null,
+    "medical_history": null,
+    "notes": null
+  },
+  {
+    "line_userid": "Ufc4c95ce42186b6965c5f684fa38c1a1",
+    "information": null,
+    "permission": "patient",
+    "password": null,
+    "name": "Kappa",
+    "birth_date": "1001",
+    "id_number": "A131",
+    "phone": "phone",
+    "blood_type": null,
+    "emergency_contact": null,
+    "emergency_contact_phone": null,
+    "email": null,
+    "height": null,
+    "weight": null,
+    "medical_history": null,
+    "notes": null
+  }
+]
