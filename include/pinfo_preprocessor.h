@@ -24,11 +24,12 @@ public:
 
 class BMICheckerModule: public CheckerModule{
 public:
+    BMICheckerModule() = default;
     bool check(patient_info_t& patient_info,int idx) override{
         std::vector<med_record_t> med_records = std::move(patient_info.get_med_records());
         med_record_t med_record = std::move(med_records[idx]);
         reports_t reports = std::move(med_record.get_reports());
-        std::map<std::string,double>  numerical_record = reports.get_numerical_records();
+        std::map<std::string,double>  numerical_record = std::move(reports.get_numerical_records());
         if(numerical_record.find("BMI") != numerical_record.end() && std::isnan(numerical_record["BMI"]) && numerical_record["BMI"] > 6 && numerical_record["BMI"] < 300){
             return false;
         }
@@ -48,11 +49,12 @@ public:
 
 class IsNANCheckerModule: public CheckerModule{
 public:
+    IsNANCheckerModule() = default;
     bool check(patient_info_t& patient_info,int idx) override{
         std::vector<med_record_t> med_records = std::move(patient_info.get_med_records());
         med_record_t med_record = std::move(med_records[idx]);
         reports_t reports = std::move(med_record.get_reports());
-        std::map<std::string,double>  numerical_record = reports.get_numerical_records();
+        std::map<std::string,double>  numerical_record = std::move(reports.get_numerical_records());
         bool isFoundNAN = false;
         for(auto& [key,value]:numerical_record){
             if(std::isnan(value)){
@@ -116,10 +118,10 @@ public:
         return patient_info;
     }
     //Checkers Editting
-    void append_checker(CheckerModule checker){
+    void append_checker(CheckerModule& checker){
         checkers.emplace_back(checker);
     }
-    void remove_checker(CheckerModule checker){
+    void remove_checker(){
         checkers.pop_back();
     }
     void preprocessor_clear(){
