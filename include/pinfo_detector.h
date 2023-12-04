@@ -28,9 +28,7 @@ class BMIDetectorModule: public DetectorModule{
 public:
     BMIDetectorModule() = default;
     std::string detect(patient_info_t& patient_info,Detector_Status_t& detector_status) override{
-        std::cout << "BMI" << std::endl;
         std::vector<med_record_t> med_records = std::move(patient_info.get_med_records());
-        std::cout << "BMI" << std::endl;
         med_record_t med_record = std::move(med_records.back());
         reports_t reports = std::move(med_record.get_reports());
         std::map<std::string,double>  numerical_record = std::move(reports.get_numerical_records());
