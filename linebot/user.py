@@ -1,9 +1,14 @@
 import json, os
 import sys
 from datetime import datetime, timedelta
-sys.path.append("../include")
-from API import *
-from pinfo import med_record_t, patient_info_t
+
+try:
+    from ..include.API import *
+    from ..include.pinfo import med_record_t, patient_info_t
+except ImportError:
+    sys.path.append("../include")
+    from API import *
+    from pinfo import med_record_t, patient_info_t
 
 class UserNotFoundException(Exception):
     "Raised when target user not found"
