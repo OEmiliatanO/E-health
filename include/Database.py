@@ -69,6 +69,7 @@ class Plain_text_DB_t(meta_DB_t):
 
     def require_by_UID(self, UID: str):
         patient_info = pinfo.patient_info_t()
+        patient_info.med_records = []
 
         with open(os.path.join(self.DB_dir, UID + ".info"), 'r') as fs:
             patient_info.UID = fs.readline().strip()
