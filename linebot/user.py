@@ -1,6 +1,7 @@
 import json, os
 import sys
 from datetime import datetime, timedelta
+from time import sleep
 
 try:
     from ..include.API import *
@@ -111,6 +112,21 @@ class Patient(User): # 不需要密碼，但需要身分資訊
     def detectLab(self, exe_file="../call_lab", dignose_file="../DB/diagnose/"):
         cmd = exe_file+" "+dignose_file+self.id_number+".info"+" "+self.id_number
         os.system(cmd)
+        sleep(0.1)
+        result_dict = {}
+        with open(dignose_file, 'r') as file:
+            lines = file.readlines()
+            current_key = None
+            current_value = ""
+
+            for line in lines:
+                line = line.strip()
+                if line.endswith(":"):
+                    current_key = line[:-1].lower().replace(" ", "_") 
+                else:
+                    current_value += line + " "
+            result_dict[current_key] = current_value.strip()
+        return result_dict
 
     def display_info(self):
         print(f"Name: {self.name}")
