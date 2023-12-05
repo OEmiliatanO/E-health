@@ -20,8 +20,8 @@ int main(int argc, char *argv[])
     if (argc > 1) {
         all_args.assign(argv + 1, argv + argc);
     }
-    std::string path = all_args[0];
     std::string patient_UID = all_args[1];
+    std::string path = all_args[0]+"/"+patient_UID+".info";
     
     api.set_DB(DB_factory::create(DB_factory::plain_text_DB), "./DB/central_DB/", status);
     patient_info_t patient = api.load_info(patient_UID, status);
@@ -39,8 +39,7 @@ int main(int argc, char *argv[])
     Preprocessor preprocessor(std::move(checkers),patient);
     patient_info_t checked_patient =  preprocessor.preprocess_last();
 
-    std::ofstream out;
-    out.open(path);
+    std::ofstream fout(path);
     for (auto med_record : patient.get_med_records())
     {
         tm = med_record.get_date();
@@ -50,11 +49,11 @@ int main(int argc, char *argv[])
         // {
         //     std::cout << "[" << k << "] = " << v << '\n';
         // }
-        out << "lab report:\n" << reports.get_lab_report();
-        out << "diagnosis:\n" << reports.get_diagnosis();
-        out << "prescription:\n" << reports.get_prescription();
+        fout << "lab report:\n" << reports.get_lab_report();
+        fout << "diagnosis:\n" << reports.get_diagnosis();
+        fout << "prescription:\n" << reports.get_prescription();
     }
-    out.close();
+    fout.close();
 
     std::vector<std::unique_ptr<DetectorModule>> detectors;
     detectors.emplace_back(std::make_unique<BMIDetectorModule>());
