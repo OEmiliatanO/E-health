@@ -94,6 +94,8 @@ class Plain_text_DB_t(meta_DB_t):
             for _ in range(N):
                 tmp_med_record = pinfo.med_record_t()
                 tmp_reports = pinfo.reports_t()
+                tmp_reports.numerical_records = {}
+                tmp_reports.image_records = []
                 fDate = self.skip_newline(fs)
                 tmp_med_record.date = time.strptime(fDate, pinfo.Time_format)
                 fM = self.skip_newline(fs)
