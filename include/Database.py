@@ -62,6 +62,7 @@ class meta_DB_t:
 
 class Plain_text_DB_t(meta_DB_t):
     def __init__(self):
+        self.postfix = ".info"
         super(Plain_text_DB_t).__init__()
 
     def connect(self):
@@ -71,7 +72,7 @@ class Plain_text_DB_t(meta_DB_t):
         patient_info = pinfo.patient_info_t()
         patient_info.med_records = []
 
-        with open(os.path.join(self.DB_dir, UID + ".info"), 'r') as fs:
+        with open(os.path.join(self.DB_dir, UID + self.postfix), 'r') as fs:
             patient_info.UID = fs.readline().strip()
             patient_info.name = fs.readline().strip()
             patient_info.birth_date = time.strptime(fs.readline().strip(), pinfo.Time_format)
@@ -106,5 +107,5 @@ class Plain_text_DB_t(meta_DB_t):
         return patient_info
 
     def set_by_UID(self, UID: str, info: pinfo.patient_info_t):
-        with open(os.path.join(self.DB_dir, UID), 'w') as fs:
+        with open(os.path.join(self.DB_dir, UID + self.postfix), 'w') as fs:
             fs.write(str(info))
