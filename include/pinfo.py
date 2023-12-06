@@ -21,7 +21,7 @@ class reports_t:
             numerical_reports += f"{k} {v}\n"
         lab_report = "[__START__]\n" + self.lab_report.strip() + "\n[__END__]\n"
         diagnosis = "[__START__]\n" + self.diagnosis.strip() + "\n[__END__]\n"
-        prescription = "[__START__]\n" + self.prescription.strip() + "\n[__END__]\n"
+        prescription = "[__START__]\n" + self.prescription.strip() + "\n[__END__]"
         return numerical_reports + lab_report + diagnosis + prescription
 
 class med_record_t:
