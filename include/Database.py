@@ -65,6 +65,12 @@ class Plain_text_DB_t(meta_DB_t):
         self.postfix = ".info"
         super(Plain_text_DB_t).__init__()
 
+    def skip_newline(self, fs):
+        nextl = fs.readline().strip()
+        while nextl == "\n":
+            nextl = fs.readline().strip()
+        return nextl
+
     def connect(self):
         return os.path.exists(self.DB_dir) and os.path.isdir(self.DB_dir)
 
@@ -73,17 +79,26 @@ class Plain_text_DB_t(meta_DB_t):
         patient_info.med_records = []
 
         with open(os.path.join(self.DB_dir, UID + self.postfix), 'r') as fs:
-            patient_info.UID = fs.readline().strip()
-            patient_info.name = fs.readline().strip()
-            patient_info.birth_date = time.strptime(fs.readline().strip(), pinfo.Time_format)
-            patient_info.last_update_time = time.strptime(fs.readline().strip(), pinfo.Time_format)
+            fUID = self.skip_newline(fs)
+            fName = self.skip_newline(fs)
+            fBirth_date = self.skip_newline(fs)
+            fLast_update_time = self.skip_newline(fs)
 
-            N = int(fs.readline().strip())
+            patient_info.UID = UID
+            patient_info.name = fName
+            patient_info.birth_date = time.strptime(fBirth_date, pinfo.Time_format)
+            patient_info.last_update_time = time.strptime(fLast_update_time, pinfo.Time_format)
+            
+            fN = self.skip_newline(fs)
+            N = int(fN)
             for _ in range(N):
                 tmp_med_record = pinfo.med_record_t()
                 tmp_reports = pinfo.reports_t()
-                tmp_med_record.date = time.strptime(fs.readline().strip(), pinfo.Time_format)
-                M = int(fs.readline().strip())
+                fDate = self.skip_newline(fs)
+                tmp_med_record.date = time.strptime(fDate, pinfo.Time_format)
+                fM = self.skip_newline(fs)
+                if fM.lower() == "none": M = 0
+                else: M = int(fM)
 
                 for __ in range(M):
                     k, v = fs.readline().split()
