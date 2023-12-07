@@ -26,8 +26,13 @@ import user as fish
 import assistant_conversation as ASConv
 
 #it will be modify later to correct path
-from API import * 
-from pinfo import med_record_t, patient_info_t
+try:
+    from ..include.API import *
+    from ..include.pinfo import med_record_t, patient_info_t
+except ImportError:
+    sys.path.append("../include")
+    from API import *
+    from pinfo import med_record_t, patient_info_t
 
 PAGE_NOW = 1
 USER_NAME = ""
