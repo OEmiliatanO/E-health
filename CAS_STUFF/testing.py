@@ -102,7 +102,6 @@ class EHealthSystemUI:
 
     def save_description(self):
         description = self.description_entry.get()
-        print(description)
         if description:
             messagebox.showinfo("Success", "Description saved successfully.")
             # Add logic to save the description (e.g., to a database)
