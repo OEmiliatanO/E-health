@@ -1,0 +1,990 @@
+#:import utils kivy.utils
+LoginWidget:
+
+<Prescribe_layout>:
+    orientation: "vertical" 
+    spacing: 10  # Add spacing to create space between buttons and BoxLayout
+    BoxLayout:
+        orientation: "horizontal"
+        size_hint: 1, None  # Set size_hint to (1, None) to avoid height dependency
+        height: 75  # Set a specific height for the BoxLayout (adjust as needed)
+        spacing: 0  # Set spacing to 0 to eliminate any space between buttons
+
+        Button:
+            background_color: 0.67, 0.13, 0.03, 1  # Slightly lighter red color
+            size_hint: 0.2, 1
+            pos_hint: {"top": 1}
+            on_release: root.chg_widget_main()
+
+            Image:
+                source: 'ui_imgs/back.png'  # Replace with the actual path to your icon
+                size: self.parent.height * 0.6, self.parent.height * 0.6
+                center: self.parent.center
+
+        Button:
+            background_color: 0.6, 0.6, 1, 1  # Slightly darker blue color
+            size_hint: 0.2, 1
+            pos_hint: {"top": 1}
+            on_release: root.chg_widget_search()
+
+            Image:
+                source: 'ui_imgs/patient.png'  # Replace with the actual path to your icon
+                size: self.parent.height * 0.6, self.parent.height * 0.6
+                center: self.parent.center
+
+        Button:
+            background_color: 0.6, 0.6, 1, 1  # Slightly darker blue color
+            size_hint: 0.2, 1
+            pos_hint: {"top": 1}
+            on_release: root.chg_widget_reservation()
+
+            Image:
+                source: 'ui_imgs/reservation.png'  # Replace with the actual path to your icon
+                size: self.parent.height * 0.6, self.parent.height * 0.6
+                center: self.parent.center
+
+        Button:
+            background_color: 0.6, 0.6, 1, 1  # Slightly darker blue color
+            size_hint: 0.2, 1
+            pos_hint: {"top": 1}
+            on_release: root.chg_widget_chat()
+
+            Image:
+                source: 'ui_imgs/mail2.png'  # Replace with the actual path to your icon
+                size: self.parent.height * 0.6, self.parent.height * 0.6
+                center: self.parent.center
+
+        Button:
+            background_color: 0.5, 0.5, 0.82, 1  # Slightly darker blue color
+            size_hint: 0.2, 1
+            pos_hint: {"top": 1}
+            on_release: root.chg_widget_prescribe()
+
+            Image:
+                source: 'ui_imgs/medicines.png'  # Replace with the actual path to your icon
+                size: self.parent.height * 0.6, self.parent.height * 0.6
+                center: self.parent.center
+    BoxLayout:
+        orientation: "horizontal"
+        size_hint: 1, None  # Set size_hint to (1, None) to avoid height dependency
+        height: 75  # Set a specific height for the BoxLayout (adjust as needed)
+        spacing: 10  # Set spacing between widgets in the second row
+
+        Label:
+            text: "Patient's UID:"
+            size_hint: 0.2, 1
+
+        TextInput:
+            id: prescribe_patient_uid_input
+            multiline: False  # Set to False if you want a single-line input
+            size_hint: None, None
+            width: 300
+            height: 50
+            pos_hint: {"top":.8}
+            font_size: 24
+        Label: #prompt
+            size_hint: 0.25, 1
+            text: root.prompt
+            color: 0.9 ,0,0,1
+            font_size: 22
+        Label: #date 
+            size_hint: 0.27, 1
+            text: root.date
+    AnchorLayout: 
+        size_hint: 0.8, 1
+        BoxLayout:
+            orientation: "horizontal"
+            size_hint: 0.8, None
+            height: 400
+            Label:
+                text:'Key Value:'
+            TextInput:
+                write_tab: False
+                id: prescribe_key_input
+                multiline: True
+                size_hint: None, 1
+                width: 300
+                height: 200
+                on_text_validate: root.update_scrollview
+            Label:
+                text:'Preview:'
+            FloatLayout:
+                ScrollView:
+                    do_scroll_x: False
+                    do_scroll_y: True
+                    background_color: (1,1,1)
+                    size_hint: None,1
+                    width: 320
+                    x: self.parent.x
+                    y: self.parent.parent.y
+                    Label:
+                        size_hint: (None, None)
+                        height: self.texture_size[1]
+                        text_size: self.width, None
+                        width: 320
+                        text: root.scroll_tex
+                        id: scrollable_label
+    BoxLayout:
+        orientation:'horizontal'
+        size_hint: 0.6, 0.15
+        pos_hint: {"center_x":.5, "top":1}
+        Button:
+            text: "Preview"
+            on_release: root.update_scrollview()
+    BoxLayout:
+        orientation: "horizontal"
+        size_hint: 1, None  # Set size_hint to (1, None) to avoid height dependency
+        height: 75  # Set a specific height for the BoxLayout (adjust as needed)
+        spacing: 0  # Set spacing to 0 to eliminate any space between buttons
+        Button:
+            background_color: 0.6, 0.6, 1, 1  # Slightly darker blue color
+            size_hint: 0.2, 1
+            pos_hint: {"top": 1}
+            text: "Lab report"
+            on_release: root.open_lab_report_editor()
+
+        Button:
+            background_color: 0.6, 0.6, 1, 1  # Slightly darker blue color
+            size_hint: 0.2, 1
+            pos_hint: {"top": 1}
+            on_release: root.open_diagnosis_editor()
+            text: "Diagnosis"
+
+        Button:
+            background_color: 0.6, 0.6, 1, 1  # Slightly darker blue color
+            size_hint: 0.2, 1
+            pos_hint: {"top": 1}
+            on_release: root.open_prescribe_editor()
+            text: "Prescribe"
+
+        Button:
+            background_color: 0.244, 0.811, 0.242, 1  # Slightly darker blue color
+            size_hint: 0.2, 1
+            pos_hint: {"top": 1}
+            on_release: root.finish()
+            text: "finish"
+
+<Patient_info_layout>:
+    orientation: "vertical" 
+    spacing: 10  # Add spacing to create space between buttons and BoxLayout
+    BoxLayout: #上排選單
+        orientation: "horizontal"
+        size_hint: 1, None  # Set size_hint to (1, None) to avoid height dependency
+        height: 75  # Set a specific height for the BoxLayout (adjust as needed)
+        spacing: 0  # Set spacing to 0 to eliminate any space between buttons
+
+        Button:
+            background_color: 0.67, 0.13, 0.03, 1  # Slightly lighter red color
+            size_hint: 0.2, 1
+            pos_hint: {"top": 1}
+            on_release: root.chg_widget_main()
+
+            Image:
+                source: 'ui_imgs/back.png'  # Replace with the actual path to your icon
+                size: self.parent.height * 0.6, self.parent.height * 0.6
+                center: self.parent.center
+
+        Button:
+            background_color: 0.5, 0.5, 0.82, 1  # Slightly darker blue color
+            size_hint: 0.2, 1
+            pos_hint: {"top": 1}
+            on_release: root.chg_widget_search()
+
+            Image:
+                source: 'ui_imgs/patient.png'  # Replace with the actual path to your icon
+                size: self.parent.height * 0.6, self.parent.height * 0.6
+                center: self.parent.center
+
+        Button:
+            background_color: 0.6, 0.6, 1, 1  # Slightly darker blue color
+            size_hint: 0.2, 1
+            pos_hint: {"top": 1}
+            on_release: root.chg_widget_reservation()
+
+            Image:
+                source: 'ui_imgs/reservation.png'  # Replace with the actual path to your icon
+                size: self.parent.height * 0.6, self.parent.height * 0.6
+                center: self.parent.center
+
+        Button:
+            background_color: 0.6, 0.6, 1, 1  # Slightly darker blue color
+            size_hint: 0.2, 1
+            pos_hint: {"top": 1}
+            on_release: root.chg_widget_chat()
+
+            Image:
+                source: 'ui_imgs/mail2.png'  # Replace with the actual path to your icon
+                size: self.parent.height * 0.6, self.parent.height * 0.6
+                center: self.parent.center
+
+        Button:
+            background_color: 0.6, 0.6, 1, 1  # Slightly darker blue color
+            size_hint: 0.2, 1
+            pos_hint: {"top": 1}
+            on_release: root.chg_widget_prescribe()
+
+            Image:
+                source: 'ui_imgs/medicines.png'  # Replace with the actual path to your icon
+                size: self.parent.height * 0.6, self.parent.height * 0.6
+                center: self.parent.center
+    FloatLayout: #搜尋欄
+        height: 100
+        size_hint: (1, 1)
+        Label:
+            text: "Patient's UID : "
+            size_hint: (1,1)
+            x: self.parent.x - self.parent.width/2 + 180
+            y: self.parent.y + 25
+            font_size: 25
+            width: 100
+        TextInput:
+            id: input_patient_uid
+            align_x: "left"
+            focut: True
+            multiline: False
+            text: "0001" #for convinence
+            x: self.parent.x + 280
+            y: self.parent.y + self.parent.height/2
+            size_hint: (None, None)
+            width: 400
+            height: 50
+            font_size: 25
+        Button:
+            background_color: (0.622, 0.832, 0.995)  # Slightly lighter red color
+            size_hint: (None,None)
+            width: 160
+            height: 50
+            on_release: root.display_info()
+            x: self.parent.x + 720
+            y: self.parent.y + self.parent.height/2
+            Image:
+                source: 'ui_imgs/search.png'  # Replace with the actual path to your icon
+                size: self.parent.height * 0.6, self.parent.height * 0.6
+                center: self.parent.center
+
+
+<WidgetsExample>
+    cols: 3
+    Button:
+        text: "Click here"
+        on_press: root.ret() 
+    Label:
+        text: "hello"
+
+<Chat_layout>:
+    orientation: "vertical" 
+    spacing: 10  # Add spacing to create space between buttons and BoxLayout
+    BoxLayout:
+        orientation: "horizontal"
+        size_hint: 1, None  # Set size_hint to (1, None) to avoid height dependency
+        height: 75  # Set a specific height for the BoxLayout (adjust as needed)
+        spacing: 0  # Set spacing to 0 to eliminate any space between buttons
+
+        Button:
+            background_color: 0.67, 0.13, 0.03, 1  # Slightly lighter red color
+            size_hint: 0.2, 1
+            pos_hint: {"top": 1}
+            on_release: root.chg_widget_main()
+
+            Image:
+                source: 'ui_imgs/back.png'  # Replace with the actual path to your icon
+                size: self.parent.height * 0.6, self.parent.height * 0.6
+                center: self.parent.center
+
+        Button:
+            background_color: 0.6, 0.6, 1, 1  # Slightly darker blue color
+            size_hint: 0.2, 1
+            pos_hint: {"top": 1}
+            on_release: root.chg_widget_search()
+
+            Image:
+                source: 'ui_imgs/patient.png'  # Replace with the actual path to your icon
+                size: self.parent.height * 0.6, self.parent.height * 0.6
+                center: self.parent.center
+
+        Button:
+            background_color: 0.6, 0.6, 1, 1  # Slightly darker blue color
+            size_hint: 0.2, 1
+            pos_hint: {"top": 1}
+            on_release: root.chg_widget_reservation()
+
+            Image:
+                source: 'ui_imgs/reservation.png'  # Replace with the actual path to your icon
+                size: self.parent.height * 0.6, self.parent.height * 0.6
+                center: self.parent.center
+
+        Button:
+            background_color: 0.5, 0.5, 0.82, 1  # Slightly darker blue color
+            size_hint: 0.2, 1
+            pos_hint: {"top": 1}
+            on_release: root.chg_widget_chat()
+
+            Image:
+                source: 'ui_imgs/mail2.png'  # Replace with the actual path to your icon
+                size: self.parent.height * 0.6, self.parent.height * 0.6
+                center: self.parent.center
+
+        Button:
+            background_color: 0.6, 0.6, 1, 1  # Slightly darker blue color
+            size_hint: 0.2, 1
+            pos_hint: {"top": 1}
+            on_release: root.chg_widget_prescribe()
+
+            Image:
+                source: 'ui_imgs/medicines.png'  # Replace with the actual path to your icon
+                size: self.parent.height * 0.6, self.parent.height * 0.6
+                center: self.parent.center
+
+    BoxLayout: #對話資料1
+        num: 1
+        orientation: "horizontal"
+        size_hint: .8, None  # Set size_hint to (0.9, None) to match the BoxLayout above
+        # height: 200  # Set a specific height for the BoxLayout (adjust as needed)
+        pos_hint: {"x": .1, "top": 1}
+        Button:
+            background_color: (0.933, 0.733, 0.196)
+            size_hint: .5, 1
+            pos_hint: {"x": .1, "top": 1}
+            on_release: root.check_mail(self.parent.num)
+            Image:
+                source: 'ui_imgs/mail_background1-3.jpg'  # Replace with the path to your image
+                width: self.parent.width*0.998
+                height: self.parent.height*0.98
+                allow_stretch: True
+                # pos: self.parent.pos
+                x: self.parent.x
+                y: self.parent.y + 1
+                keep_ratio:False
+
+            Label: #對話概述
+                color: (0.303, 0.170, 0.05) 
+                text: root.chat_text1
+                size_hint: None, None
+                size: self.texture_size  # Use the texture size as the actual size
+                halign: 'left'
+                valign: 'middle'
+                pos: self.parent.x + self.parent.center_x/10, self.parent.center_y - self.height / 2
+        Button: #回復按鈕
+            background_color: (0.986, 0.753, 0.262)
+            text: ""
+            size_hint: .1, 1
+            pos_hint : {"top": 1}
+            on_release: root.reply_mail(self.parent.num)
+            Image:
+                source: 'ui_imgs/mail3.png'
+                y: self.parent.y + self.parent.height * 0.2
+                x: self.parent.x + self.parent.width * 0.2
+                size: self.parent.width * 0.6, self.parent.height * 0.6  # Set the size directly
+
+        Button: #刪除按鈕
+            background_color: 0.986, 0.206, 0.206
+            pos_hint : {"top": 1}
+            size_hint: .1, 1
+            markup: True
+            on_release: root.delete_mail(self.parent.num)
+            Image:
+                source: 'ui_imgs/fire1.png'
+                y: self.parent.y + self.parent.height * 0.2
+                x: self.parent.x + self.parent.width * 0.2
+                size: self.parent.width * 0.6, self.parent.height * 0.6  # Set the size directly      
+
+    BoxLayout: #對話資料2
+        num: 2
+        orientation: "horizontal"
+        size_hint: .8, None  # Set size_hint to (0.9, None) to match the BoxLayout above
+        # height: 200  # Set a specific height for the BoxLayout (adjust as needed)
+        pos_hint: {"x": .1, "top": 1}
+        Button:
+            background_color: (0.933, 0.733, 0.196)
+            size_hint: .5, 1
+            pos_hint: {"x": .1, "top": 1}
+            on_release: root.check_mail(self.parent.num)
+            Image:
+                source: 'ui_imgs/mail_background1-3.jpg'  # Replace with the path to your image
+                width: self.parent.width*0.998
+                height: self.parent.height*0.98
+                allow_stretch: True
+                # pos: self.parent.pos
+                x: self.parent.x
+                y: self.parent.y + 1
+                keep_ratio:False
+
+            Label: #對話概述
+                color: (0.303, 0.170, 0.05) 
+                text: root.chat_text2
+                size_hint: None, None
+                size: self.texture_size  # Use the texture size as the actual size
+                halign: 'left'
+                valign: 'middle'
+                pos: self.parent.x + self.parent.center_x/10, self.parent.center_y - self.height / 2
+                
+
+        Button: #回復按鈕
+            background_color: (0.986, 0.753, 0.262)
+            text: ""
+            size_hint: .1, 1
+            pos_hint : {"top": 1}
+            on_release: root.reply_mail(self.parent.num)
+            Image:
+                source: 'ui_imgs/mail3.png'
+                y: self.parent.y + self.parent.height * 0.2
+                x: self.parent.x + self.parent.width * 0.2
+                size: self.parent.width * 0.6, self.parent.height * 0.6  # Set the size directly
+
+        Button: #刪除按鈕
+            background_color: 0.986, 0.206, 0.206
+            pos_hint : {"top": 1}
+            size_hint: .1, 1
+            markup: True
+            on_release: root.delete_mail(self.parent.num)
+            Image:
+                source: 'ui_imgs/fire1.png'
+                y: self.parent.y + self.parent.height * 0.2
+                x: self.parent.x + self.parent.width * 0.2
+                size: self.parent.width * 0.6, self.parent.height * 0.6  # Set the size directly
+
+    BoxLayout: #對話資料3
+        num: 3
+        orientation: "horizontal"
+        size_hint: .8, None  # Set size_hint to (0.9, None) to match the BoxLayout above
+        # height: 200  # Set a specific height for the BoxLayout (adjust as needed)
+        pos_hint: {"x": .1, "top": 1}
+        Button:
+            background_color: (0.933, 0.733, 0.196)
+            size_hint: .5, 1
+            pos_hint: {"x": .1, "top": 1}
+            on_release: root.check_mail(self.parent.num)
+            Image:
+                source: 'ui_imgs/mail_background1-3.jpg'  # Replace with the path to your image
+                width: self.parent.width*0.998
+                height: self.parent.height*0.98
+                allow_stretch: True
+                # pos: self.parent.pos
+                x: self.parent.x
+                y: self.parent.y + 1
+                keep_ratio:False
+
+            Label: #對話概述
+                color: (0.303, 0.170, 0.05) 
+                text: root.chat_text3
+                size_hint: None, None
+                size: self.texture_size  # Use the texture size as the actual size
+                halign: 'left'
+                valign: 'middle'
+                pos: self.parent.x + self.parent.center_x/10, self.parent.center_y - self.height / 2
+                
+
+        Button: #回復按鈕
+            background_color: (0.986, 0.753, 0.262)
+            text: ""
+            size_hint: .1, 1
+            pos_hint : {"top": 1}
+            on_release: root.reply_mail(self.parent.num)
+            Image:
+                source: 'ui_imgs/mail3.png'
+                y: self.parent.y + self.parent.height * 0.2
+                x: self.parent.x + self.parent.width * 0.2
+                size: self.parent.width * 0.6, self.parent.height * 0.6  # Set the size directly
+
+        Button: #刪除按鈕
+            background_color: 0.986, 0.206, 0.206
+            pos_hint : {"top": 1}
+            size_hint: .1, 1
+            markup: True
+            on_release: root.delete_mail(self.parent.num)
+            Image:
+                source: 'ui_imgs/fire1.png'
+                y: self.parent.y + self.parent.height * 0.2
+                x: self.parent.x + self.parent.width * 0.2
+                size: self.parent.width * 0.6, self.parent.height * 0.6  # Set the size directly
+    AnchorLayout: #下標選單
+        orientation: "horizontal"
+        BoxLayout:
+            anchor_x: 'center'
+            spacing: 30
+            size_hint: 0.3, 0.3
+            Button: #上一頁
+                text: "<"
+                on_press: root.prev_page()
+            Label:  #第幾頁
+                text: root.page_text
+            Button: #下一頁
+                text: ">"
+                on_press: root.next_page()
+
+
+<Reservation_layout>:
+    orientation: "vertical" 
+    spacing: 10  # Add spacing to create space between buttons and BoxLayout
+    BoxLayout:
+        orientation: "horizontal"
+        size_hint: 1, None  # Set size_hint to (1, None) to avoid height dependency
+        height: 75  # Set a specific height for the BoxLayout (adjust as needed)
+        spacing: 0  # Set spacing to 0 to eliminate any space between buttons
+
+        Button:
+            background_color: 0.67, 0.13, 0.03, 1  # Slightly lighter red color
+            size_hint: 0.2, 1
+            pos_hint: {"top": 1}
+            on_release: root.chg_widget_main()
+
+            Image:
+                source: 'ui_imgs/back.png'  # Replace with the actual path to your icon
+                size: self.parent.height * 0.6, self.parent.height * 0.6
+                center: self.parent.center
+
+        Button:
+            background_color: 0.6, 0.6, 1, 1  # Slightly darker blue color
+            size_hint: 0.2, 1
+            pos_hint: {"top": 1}
+            on_release: root.chg_widget_search()
+
+            Image:
+                source: 'ui_imgs/patient.png'  # Replace with the actual path to your icon
+                size: self.parent.height * 0.6, self.parent.height * 0.6
+                center: self.parent.center
+
+        Button:
+            background_color: 0.5, 0.5, 0.82, 1  # Slightly darker blue color
+            size_hint: 0.2, 1
+            pos_hint: {"top": 1}
+            on_release: root.chg_widget_reservation()
+
+            Image:
+                source: 'ui_imgs/reservation.png'  # Replace with the actual path to your icon
+                size: self.parent.height * 0.6, self.parent.height * 0.6
+                center: self.parent.center
+
+        Button:
+            background_color: 0.6, 0.6, 1, 1  # Slightly darker blue color
+            size_hint: 0.2, 1
+            pos_hint: {"top": 1}
+            on_release: root.chg_widget_chat()
+
+            Image:
+                source: 'ui_imgs/mail2.png'  # Replace with the actual path to your icon
+                size: self.parent.height * 0.6, self.parent.height * 0.6
+                center: self.parent.center
+
+        Button:
+            background_color: 0.6, 0.6, 1, 1  # Slightly darker blue color
+            size_hint: 0.2, 1
+            pos_hint: {"top": 1}
+            on_release: root.chg_widget_prescribe()
+
+            Image:
+                source: 'ui_imgs/medicines.png'  # Replace with the actual path to your icon
+                size: self.parent.height * 0.6, self.parent.height * 0.6
+                center: self.parent.center
+    BoxLayout: #預約清單1
+        num: 1
+        orientation: "horizontal"
+        size_hint: .8, None  # Set size_hint to (0.9, None) to match the BoxLayout above
+        # height: 200  # Set a specific height for the BoxLayout (adjust as needed)
+        pos_hint: {"x": .1, "top": 1}
+        Button:
+            background_color: 0.522, 0.702, 0.875    
+            size_hint: .5, 1
+            pos_hint: {"x": .1, "top": 1}
+
+            Label: #預約資料
+                text: root.reservation_text1
+                size_hint: None, None
+                size: self.texture_size  # Use the texture size as the actual size
+                halign: 'left'
+                valign: 'middle'
+                pos: self.parent.x + self.parent.center_x/10, self.parent.center_y - self.height / 2
+
+        Button: #修改按鈕
+            background_color: 0.976, 0.733, 0.212
+            text: ""
+            size_hint: .1, 1
+            pos_hint : {"top": 1}
+            on_press: root.chg_edit_resv(self.parent.num)
+            Image:
+                source: 'ui_imgs/edit.png'
+                y: self.parent.y + self.parent.height * 0.2
+                x: self.parent.x + self.parent.width * 0.2
+                size: self.parent.width * 0.6, self.parent.height * 0.6  # Set the size directly
+
+        Button: #刪除按鈕
+            background_color: 0.976, 0.176, 0.176
+            pos_hint : {"top": 1}
+            size_hint: .1, 1
+            markup: True
+            on_press: root.delete_resv(self.parent.num)
+            Image:
+                source: 'ui_imgs/trashcan.png'
+                y: self.parent.y + self.parent.height * 0.2
+                x: self.parent.x + self.parent.width * 0.2
+                size: self.parent.width * 0.6, self.parent.height * 0.6  # Set the size directly
+
+    BoxLayout: #預約清單2
+        num: 2
+        orientation: "horizontal"
+        size_hint: .8, None  # Set size_hint to (0.9, None) to match the BoxLayout above
+        # height: 200  # Set a specific height for the BoxLayout (adjust as needed)
+        pos_hint: {"x": .1, "top": 1}
+        Button:
+            background_color: 0.522, 0.702, 0.875    
+            size_hint: .5, 1
+            pos_hint: {"x": .1, "top": 1}
+
+            Label:
+                text: root.reservation_text2
+                size_hint: None, None
+                size: self.texture_size  # Use the texture size as the actual size
+                halign: 'left'
+                valign: 'middle'
+                pos: self.parent.x + self.parent.center_x/10, self.parent.center_y - self.height / 2
+
+        Button: #修改
+            background_color: 0.976, 0.733, 0.212
+            text: ""
+            size_hint: .1, 1
+            pos_hint : {"top": 1}
+            on_press: root.chg_edit_resv(self.parent.num)
+            Image:
+                source: 'ui_imgs/edit.png'
+                y: self.parent.y + self.parent.height * 0.2
+                x: self.parent.x + self.parent.width * 0.2
+                size: self.parent.width * 0.6, self.parent.height * 0.6  # Set the size directly
+
+        Button: #刪除
+            on_press: root.delete_resv(self.parent.num)
+            background_color: 0.976, 0.176, 0.176
+            pos_hint : {"top": 1}
+            size_hint: .1, 1
+            markup: True
+            # text: '[img]trashcan.png[/img]'
+            Image:
+                source: 'ui_imgs/trashcan.png'
+                y: self.parent.y + self.parent.height * 0.2
+                x: self.parent.x + self.parent.width * 0.2
+                size: self.parent.width * 0.6, self.parent.height * 0.6  # Set the size directly
+    BoxLayout: #預約清單3
+        num: 3
+        orientation: "horizontal"
+        size_hint: .8, None  # Set size_hint to (0.9, None) to match the BoxLayout above
+        # height: 200  # Set a specific height for the BoxLayout (adjust as needed)
+        pos_hint: {"x": .1, "top": 1}
+        Button: #資料
+            background_color: 0.522, 0.702, 0.875    
+            size_hint: .5, 1
+            pos_hint: {"x": .1, "top": 1}
+
+            Label:
+                text: root.reservation_text3
+                size_hint: None, None
+                size: self.texture_size  # Use the texture size as the actual size
+                halign: 'left'
+                valign: 'middle'
+                pos: self.parent.x + self.parent.center_x/10, self.parent.center_y - self.height / 2
+
+        Button: #修改
+            background_color: 0.976, 0.733, 0.212
+            text: ""
+            size_hint: .1, 1
+            pos_hint : {"top": 1}
+            on_press: root.chg_edit_resv(self.parent.num)
+            Image:
+                source: 'ui_imgs/edit.png'
+                y: self.parent.y + self.parent.height * 0.2
+                x: self.parent.x + self.parent.width * 0.2
+                size: self.parent.width * 0.6, self.parent.height * 0.6  # Set the size directly
+
+        Button: #刪除
+            on_press: root.delete_resv(self.parent.num)
+            background_color: 0.976, 0.176, 0.176
+            pos_hint : {"top": 1}
+            size_hint: .1, 1
+            markup: True
+            # text: '[img]trashcan.png[/img]'
+            Image:
+                source: 'ui_imgs/trashcan.png'
+                y: self.parent.y + self.parent.height * 0.2
+                x: self.parent.x + self.parent.width * 0.2
+                size: self.parent.width * 0.6, self.parent.height * 0.6  # Set the size directly
+
+    
+    AnchorLayout: #下標選單
+        orientation: "horizontal"
+        BoxLayout:
+            anchor_x: 'center'
+            spacing: 30
+            size_hint: 0.3, 0.3
+            Button:
+                text: "<"
+                on_press: root.prev_page()
+                # size_hint: .1, .1
+            Label:                          #第幾頁
+                text: root.page_text
+            Button:
+                text: ">"
+                on_press: root.next_page()
+                # size_hint: .1, .1
+
+<EditResv>:
+    name: "widget_edit_resv"
+    orientation: "vertical"
+    spacing: 10
+    Label:
+        text: "Edit Reservation"
+        size_hint: .8, .1
+        pos_hint: {"top": 0.9, "center_x": 0.5}
+        font_size: self.width/20
+
+    BoxLayout:
+        orientation: "horizontal"
+        size_hint: .8, .1
+        pos_hint: {"top": 0.8, "center_x": 0.5}
+        Label:
+            text: root.patient_name
+            size: self.size
+
+
+    BoxLayout:
+        orientation: "horizontal"
+        size_hint: .8, None
+        pos_hint: {"top": 0.7, "center_x": 0.5}
+        Label:
+            text: "Time: "
+            # size_hint: .3, .4
+            pos_hint: {"top": 1}
+            size_hint: None, .4
+            halign: 'left'
+            valign: 'middle'
+            pos: self.parent.x + self.parent.center_x/10, self.parent.center_y - self.height / 2
+        TextInput:
+            id: input_time_y
+            size_hint: .1, .4
+            align_x: "left"
+            multiline: False
+            text: root.patient_time_y
+            pos_hint: {"top": 1}
+
+        TextInput:
+            id: input_time_m
+            size_hint: .1, .4
+            align_x: "left"
+            multiline: False
+            text: root.patient_time_m
+            pos_hint: {"top": 1}
+
+        TextInput:
+            id: input_time_d
+            size_hint: .1, .4
+            align_x: "left"
+            multiline: False
+            text: root.patient_time_d
+            pos_hint: {"top": 1}
+
+    BoxLayout:
+        orientation: "horizontal"
+        size_hint: .8, None
+        pos_hint: {"top": 1, "center_x": 0.5}
+        Label:
+            text: "Number: "
+            size_hint: None, .4
+            halign: 'left'
+            valign: 'middle'
+            pos: self.parent.x + self.parent.center_x/10, self.parent.center_y - self.height / 2
+            pos_hint: {"top": 1}
+        TextInput:
+            id: input_number
+            size_hint: .5, .4
+            align_x: "left"
+            pos_hint: {"top": 1}
+            multiline: False
+            text: str(root.patient_number)  # Convert to string for TextInput
+    BoxLayout:
+        orientation: "horizontal"
+        size_hint: .8, None
+        pos_hint: {"top": 1, "center_x": 0.5}
+        Label:
+            text: "Note: "
+            size_hint: None, .8
+            halign: 'left'
+            valign: 'middle'
+            pos: self.parent.x + self.parent.center_x/10, self.parent.center_y - self.height / 2
+            pos_hint: {"top": 1}
+        TextInput:
+            id: input_note
+            size_hint: .5, .8
+            align_x: "left"
+            pos_hint: {"top": 1}
+            multiline: False
+            text: str(root.patient_note)  # Convert to string for TextInput
+    BoxLayout:
+        orientation: "horizontal"
+        size_hint: .8, .1
+        pos_hint: {"top": 0.5, "center_x": 0.5}
+        spacing: 10
+        Button:
+            background_color: 0.976, 0.733, 0.212
+            size_hint: .5, .6
+            text: "Save"
+            on_release: root.save()
+        Button:
+            background_color: 0.976, 0.176, 0.176
+            size_hint: .5, .6
+            text: "Cancel"
+            on_release: root.cancel()
+
+
+<MainWidget>:
+    orientation: "vertical" 
+    BoxLayout:
+        orientation: "horizontal"
+        size_hint: 1, None  # Set size_hint to (1, None) to avoid height dependency
+        height: 75  # Set a specific height for the BoxLayout (adjust as needed)
+        spacing: 0  # Set spacing to 0 to eliminate any space between buttons
+        pos_hint: {"top": 1}
+        Label:
+            text: root.doctor_id
+            size_hint: .2, 1
+            pos_hint : {"x": .0, "top": 1}
+
+        Button:
+            background_color: 0.6, 0.6, 1, 1  # Slightly darker blue color
+            size_hint: 0.2, 1
+            pos_hint: {"top": 1}
+            on_release: root.chg_widget_search()
+
+            Image:
+                source: 'ui_imgs/patient.png'  # Replace with the actual path to your icon
+                size: self.parent.height * 0.6, self.parent.height * 0.6
+                center: self.parent.center
+
+        Button:
+            background_color: 0.6, 0.6, 1, 1  # Slightly darker blue color
+            size_hint: 0.2, 1
+            pos_hint: {"top": 1}
+            on_release: root.chg_widget_reservation()
+
+            Image:
+                source: 'ui_imgs/reservation.png'  # Replace with the actual path to your icon
+                size: self.parent.height * 0.6, self.parent.height * 0.6
+                center: self.parent.center
+
+        Button:
+            background_color: 0.6, 0.6, 1, 1  # Slightly darker blue color
+            size_hint: 0.2, 1
+            pos_hint: {"top": 1}
+            on_release: root.chg_widget_chat()
+
+            Image:
+                source: 'ui_imgs/mail2.png'  # Replace with the actual path to your icon
+                size: self.parent.height * 0.6, self.parent.height * 0.6
+                center: self.parent.center
+
+        Button:
+            background_color: 0.6, 0.6, 1, 1  # Slightly darker blue color
+            size_hint: 0.2, 1
+            pos_hint: {"top": 1}
+            on_release: root.chg_widget_prescribe()
+
+            Image:
+                source: 'ui_imgs/medicines.png'  # Replace with the actual path to your icon
+                size: self.parent.height * 0.6, self.parent.height * 0.6
+                center: self.parent.center
+    Label:
+        text:''
+        size_hint: (1, 0.1)
+    FloatLayout:
+        # size: self.parent.size
+        Image:
+            id: my_assistant
+            source: 'ui_imgs/assistant1.png'  # Replace with the actual path to your icon
+            pos_hint: {"center_y":.5}
+            right: 350
+        Label:
+            text:'Robin'
+            size: (1,1)
+            pos_hint: {"center_y":.8}
+            right: 375
+            font_size: 30
+        Label:
+            text:'Your Personal Assistant'
+            size: (1,1)
+            pos_hint: {"center_y":.75}
+            right: 400
+            font_size: 17
+        Button:
+            background_color: (0, 0, 0, 0.5)
+            size_hint: None, None
+            size: (370, 200)
+            pos_hint: {"center_y": .25}
+            right: 870
+            on_release: root.talk()
+            Label:
+                size: self.parent.size
+                font_size: 20
+                text_size: self.parent.size[0]*0.95, self.parent.size[1] 
+                pos: self.parent.pos
+                text: root.conversation
+                halign: 'center'  
+                valign: 'middle'  
+
+<LoginWidget>:
+    orientation: "vertical"
+    # canvas.before:
+    #     Color:
+    #         rgb: utils.get_color_from_hex("#99D6C6")
+    #     Rectangle:
+    #         size: self.size
+    #         pos: self.pos
+    canvas:
+        Rectangle:
+            source: 'ui_imgs/background1.jpg'  # Replace with the actual path to your image
+            pos: self.pos
+            size: self.size
+    Label:
+        text: "Look Doctor Game"
+        # color: 0, .1, .1, 1
+        size_hint: .8, .8
+        pos_hint: {"top:":1, "center_x": .5}
+        font_size: self.width/20
+    FloatLayout:
+        orientation: "horizontal"
+        Label:
+            text: "UserName: "
+            # color: 0, .1, .1, 1
+            size_hint: .3, .25
+            pos_hint: {"x": .2, "top": 1}
+        TextInput:
+            id: input_user_name
+            # text: line_id_text
+            size_hint: .3, .25
+            align_x: "left"
+            pos_hint: {"x": .4,"top": 1}
+            focut: True
+            multiline: False
+            text: "TestDoctor" #for convinence
+    FloatLayout:
+        orientation: "horizontal"
+        pos_hint: {"top": 1}
+        Label:
+            text: "Password: "
+            # color: 0, .1, .1, 1
+            size_hint: .3, .25
+            pos_hint: {"x": .2, "top": 1}
+        TextInput:
+            id: input_password
+            size_hint: .3, .25
+            align_x: "left"
+            pos_hint: {"x": .4,"top": 1}
+            focut: True
+            multiline: False
+            text: "dr.test.pass" #for convinence
+
+    Label:
+        text: root.message_text
+        color: .8, 0, 0, 1
+    Button:
+        text: "Login"
+        on_release: root.login()
+
+
+
+
