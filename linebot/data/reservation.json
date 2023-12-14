@@ -1,0 +1,18 @@
+{
+  "2023-12-04": [
+    {
+      "time": "2023-12-04",
+      "doctor": "dr.test.id",
+      "note": "Test info1",
+      "patient": "pt.test.id",
+      "number": 0
+    },
+    {
+      "time": "2023-12-04",
+      "doctor": "dr.test.id",
+      "note": "Test info2",
+      "patient": "pt.test.id",
+      "number": 1
+    }
+  ]
+}

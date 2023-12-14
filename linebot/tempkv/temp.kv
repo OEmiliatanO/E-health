@@ -1,0 +1,60 @@
+    BoxLayout:
+        orientation: "horizontal"
+        size_hint: 1, None  # Set size_hint to (1, None) to avoid height dependency
+        height: 75  # Set a specific height for the BoxLayout (adjust as needed)
+        spacing: 0  # Set spacing to 0 to eliminate any space between buttons
+
+        Button:
+            background_color: 0.67, 0.13, 0.03, 1  # Slightly lighter red color
+            size_hint: 0.2, 1
+            pos_hint: {"top": 1}
+            on_release: root.chg_widget_main()
+
+            Image:
+                source: 'back.png'  # Replace with the actual path to your icon
+                size: self.parent.height * 0.6, self.parent.height * 0.6
+                center: self.parent.center
+
+        Button:
+            background_color: 0.6, 0.6, 1, 1  # Slightly darker blue color
+            size_hint: 0.2, 1
+            pos_hint: {"top": 1}
+            on_release: root.chg_widget_search()
+
+            Image:
+                source: 'patient.png'  # Replace with the actual path to your icon
+                size: self.parent.height * 0.6, self.parent.height * 0.6
+                center: self.parent.center
+
+        Button:
+            background_color: 0.6, 0.6, 1, 1  # Slightly darker blue color
+            size_hint: 0.2, 1
+            pos_hint: {"top": 1}
+            on_release: root.chg_widget_reservation()
+
+            Image:
+                source: 'reservation.png'  # Replace with the actual path to your icon
+                size: self.parent.height * 0.6, self.parent.height * 0.6
+                center: self.parent.center
+
+        Button:
+            background_color: 0.5, 0.5, 0.82, 1  # Slightly darker blue color
+            size_hint: 0.2, 1
+            pos_hint: {"top": 1}
+            on_release: root.chg_widget_chat()
+
+            Image:
+                source: 'mail2.png'  # Replace with the actual path to your icon
+                size: self.parent.height * 0.6, self.parent.height * 0.6
+                center: self.parent.center
+
+        Button:
+            background_color: 0.6, 0.6, 1, 1  # Slightly darker blue color
+            size_hint: 0.2, 1
+            pos_hint: {"top": 1}
+            on_release: root.chg_widget_prescribe()
+
+            Image:
+                source: 'medicines.png'  # Replace with the actual path to your icon
+                size: self.parent.height * 0.6, self.parent.height * 0.6
+                center: self.parent.center
