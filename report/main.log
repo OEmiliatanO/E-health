@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999994 (TeX Live 2022) (preloaded format=xelatex 2023.2.17)  20 DEC 2023 20:41
+This is XeTeX, Version 3.141592653-2.6-0.999994 (TeX Live 2022) (preloaded format=xelatex 2023.2.17)  20 DEC 2023 20:57
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -646,12 +646,15 @@ LaTeX Font Warning: Font shape `TU/ptm/b/n' undefined
 
 LaTeX Font Warning: Some font shapes were not available, defaults substituted.
 
+
+LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
+
  ) 
 Here is how much of TeX's memory you used:
- 9820 strings out of 476688
- 232794 string characters out of 5807699
+ 9821 strings out of 476688
+ 232812 string characters out of 5807699
  1848001 words of memory out of 5000000
- 29930 multiletter control sequences out of 15000+600000
+ 29931 multiletter control sequences out of 15000+600000
  517586 words of font info for 64 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
  70i,6n,81p,286b,348s stack positions out of 10000i,1000n,20000p,200000b,200000s
