@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999994 (TeX Live 2022) (preloaded format=xelatex 2023.2.17)  20 DEC 2023 20:57
+This is XeTeX, Version 3.141592653-2.6-0.999994 (TeX Live 2022) (preloaded format=xelatex 2023.2.17)  23 DEC 2023 22:26
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -640,9 +640,29 @@ LaTeX Font Warning: Font shape `TU/pcr/m/n' undefined
 LaTeX Font Warning: Font shape `TU/ptm/b/n' undefined
 (Font)              using `TU/ptm/m/n' instead on input line 69.
 
+File: asset/flowchart.png Graphic file (type bmp)
+<asset/flowchart.png>
+
+Overfull \hbox (24.48322pt too wide) in paragraph at lines 74--75
+ [][] 
+ []
+
 [1
 
-] (./main.aux)
+]
+File: asset/DB_UML.png Graphic file (type bmp)
+<asset/DB_UML.png>
+
+Overfull \hbox (30.6533pt too wide) in paragraph at lines 104--105
+ [][] 
+ []
+
+File: asset/simple_factory.png Graphic file (type bmp)
+<asset/simple_factory.png>
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+[2] [3] (./main.aux)
 
 LaTeX Font Warning: Some font shapes were not available, defaults substituted.
 
@@ -651,12 +671,12 @@ LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
 
  ) 
 Here is how much of TeX's memory you used:
- 9821 strings out of 476688
- 232812 string characters out of 5807699
- 1848001 words of memory out of 5000000
- 29931 multiletter control sequences out of 15000+600000
+ 9858 strings out of 476688
+ 233554 string characters out of 5807699
+ 1850001 words of memory out of 5000000
+ 29962 multiletter control sequences out of 15000+600000
  517586 words of font info for 64 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
  70i,6n,81p,286b,348s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on main.pdf (1 page).
+Output written on main.pdf (3 pages).
