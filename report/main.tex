@@ -48,6 +48,7 @@
 \usepackage{xparse}
 \usepackage{hyperref}
 \usepackage{lmodern}
+\usepackage{enumitem}
 \lstset{language=C,keywordstyle={\bfseries \color{blue}}}
 
 \input macro.tex
@@ -224,6 +225,95 @@
 %\section{Code}
 %\label{sec:code}
 
+\subsection*{Frontend and Medium}
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[scale = 0.5]{asset/frontend_and_medium/MED_whole.png}
+  \caption{The UML of frontend and medium.}
+  \label{fig:uml_frontend_and_medium}
+\end{figure}
+
+In the code for the patient frontend and middleware, our functionalities are as follows (refer to Figure \ref{fig:uml_frontend_and_medium}):
+
+\begin{enumerate}[label=\arabic*.]
+    \item Utilize Ngrok to forward external requests to the locally specified port.
+    \item Integrate LineBot, HTML, JS, and CSS, serving as the patient frontend to send requests such as registration, message sending, and reservations.
+    \item Connect to the database to retrieve detailed information based on the user's ID.
+    \item Interface with the Processor (Lab), sending detailed information retrieved from the database to the C++ Processor (Lab) for processing and receiving the information back.
+    \item Enable the Doctor GUI to utilize the Patient Class to 
+    \begin{enumerate}[label=(\roman*)]
+        \item obtain detailed information from the database,
+        \item access return information from the Processor (Lab),
+        \item retrieve the Message Class, and
+        \item use the \codeword{Reply()} method to quickly respond to messages via LineBot (refer to Figure \ref{fig:uml_frontend_and_medium}),
+        \item obtain detailed data from the Reservation Class,
+        \item access the Doctor Class, and
+        \item verify its name and password for login.
+    \end{enumerate}
+\end{enumerate}
+
+Next, we will explain each class in the frontend and medium, highlighting some special member functions and attributes:
+
+\subsubsection*{User}
+
+\begin{itemize}
+    \item An abstract class primarily responsible for handling account information such as:
+    \begin{enumerate}[label=(\roman*)]
+        \item \codeword{permission:} Manages permissions, used to confirm the current user mode (admin or guest).
+        \item \codeword{line\_id:} Mainly used to record the user's Line ID, this information is automatically obtained from Line during registration and transmitted to our server.
+        \item \codeword{getLoginState(String):} Takes a password as input and checks if it is the correct password.
+    \end{enumerate}
+\end{itemize}
+
+\subsubsection*{Patient}
+
+\begin{itemize}
+    \item A child class of User, mainly deals with patient account information, where it interfaces with the \codeword{patient\_info\_t} in the database to obtain detailed data such as heart rate, blood glucose:
+    \begin{enumerate}[label=(\roman*)]
+        \item \codeword{detectLab(String):} Will send the information of \codeword{patient\_info\_t} to the Preprocessor, obtaining a detailed diagnosis such as "high heart rate," "diabetes risk," etc (refer to Figure \ref{fig:uml_medium_preprocessor_database}).
+    \end{enumerate}
+\end{itemize}
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[scale = 0.5]{asset/frontend_and_medium/MED_usage_processor_DB.png}
+  \caption{The UML of interaction between medium, preprocessor and database.}
+  \label{fig:uml_medium_preprocessor_database}
+\end{figure}
+
+\subsubsection*{JsonControl}
+
+\begin{itemize}
+    \item An interface implemented by the User, Reservation, and Message classes. Its main purpose is to serialize objects into JSON files for easy storage and access:
+    \begin{enumerate}[label=(\roman*)]
+        \item \codeword{toJson():} Stores all objects of the entire class in JSON format.
+        \item \codeword{loadJson():} Reads a JSON file and restores all objects from it into a list.
+    \end{enumerate}
+\end{itemize}
+
+\subsubsection*{Reservation}
+
+\begin{itemize}
+    \item When a patient uses the frontend LineBot to make a reservation, a Reservation object is created. It is used and deleted by the Doctor GUI and includes Patient and Doctor objects to determine the patient and the reserved doctor (refer to Figure \ref{fig:uml_medium_and_doctor_gui}).
+\end{itemize}
+
+\subsubsection*{Message}
+
+\begin{itemize}
+    \item When a patient uses the frontend LineBot to send a message, a Message object is created. It is used, replied to, and deleted by the Doctor GUI and includes Patient and Doctor objects to determine the patient and the doctor being messaged (refer to Figure \ref{fig:uml_medium_and_doctor_gui}):
+    \begin{enumerate}[label=(\roman*)]
+        \item \codeword{reply():} Based on its own Patient object, it uses LineBot to send a message back to the patient (because the Patient object contains the line\_id attribute).
+    \end{enumerate}
+\end{itemize}
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[scale = 0.5]{asset/frontend_and_medium/MED_usage_doctor_gui.png}
+  \caption{The UML of interaction between medium and Doctor GUI.}
+  \label{fig:uml_medium_and_doctor_gui}
+\end{figure}
+
 \section{Conclusion}
 \label{sec:conclusion}
 In this project, we develope a E-healthcare management system, which solves 
@@ -242,5 +332,6 @@ is highly scalable and easy to maintain.
 \label{sec:contribution}
 
 \texttt{B103040012} (Cheng-Han Hsieh, 謝承翰): the design of the whole architecture, database, paper report
+\texttt{B103040001} (Shih-Yu Sun, 孫世諭): medium, frontend, linebot, paper report
 
 \end{document}
