@@ -86,11 +86,31 @@
 
   \begin{figure}[h]
     \centering
-    \includegraphics[scale = 0.3]{asset/flowchart.png}
+    \includegraphics[scale = 0.25]{asset/flowchart.png}
     \caption{A simple example of outline.}
     \label{fig:flowchart}
   \end{figure}
-  \xfig{fig:flowchart} shows the skelton of the whole system. 
+
+  \xfig{fig:flowchart} shows the skelton of the whole system. The left-top 
+  part is the scrawled database, which defines ``what'' is in the database. 
+  As shown, the database contains necessary medical information of patients. 
+  The right-top part is the situation that a patient has maken an appointment 
+  with doctor and he need to take a physical examination first. By insert the 
+  ID card, the physical data will be recorded into the local database, syncing 
+  with the central database, and in the mean time, the result of examination 
+  will be sended to ``auto-detecters'', which detect the abnormal data in the 
+  physical reports, and notify the patient. The auto-detecters can detect 
+  potential diseases like cancer by determining the gene expression profiling, 
+  or diabetes by the physical data. 
+  The middle part is the situation that a patient or a doctor wants to obtain 
+  the information of the patient. After inserting the ID card, the local 
+  database will check whether the status of corresponding data. If it is out of 
+  date or not exists, the local database will try to sync with the central 
+  database, otherwise create a new one if this patient is totally new. Eventually, 
+  the information of this patient is returned to the client (device). 
+  The bottom part shows a doctor make the diagnosis and prescription for the 
+  patient. The new diagnosis and prescription are write-backed to the local 
+  database, and also sync with the central one. 
 
 \section{Features}
 \label{sec:features}
@@ -116,7 +136,7 @@
   \subsection*{Database}
   \begin{figure}[h]
     \centering
-    \includegraphics[scale = 0.7]{asset/database/DB_UML.png}
+    \includegraphics[scale = 0.6]{asset/database/DB_UML.png}
     \caption{The UML of the whole database.}
     \label{fig:DB_UML}
   \end{figure}
@@ -126,7 +146,7 @@
 
   \begin{figure}[h]
     \centering
-    \includegraphics[scale = 0.7]{asset/database/pinfo.png}
+    \includegraphics[scale = 0.35]{asset/database/pinfo.png}
     \caption{The UML of the class definition of patient information.}
     \label{fig:pinfo_UML}
   \end{figure}
@@ -140,7 +160,7 @@
 
   \begin{figure}[h]
     \centering
-    \includegraphics[scale = 0.7]{asset/database/DB_API.png}
+    \includegraphics[scale = 0.5]{asset/database/DB_API.png}
     \caption{The UML of the class definition of database API.}
     \label{fig:API_UML}
   \end{figure}
@@ -178,7 +198,7 @@
 
   \begin{figure}[h]
     \centering
-    \includegraphics[scale = 0.7]{asset/database/simple_factory.png}
+    \includegraphics[scale = 0.5]{asset/database/simple_factory.png}
     \caption{The UML of a simple factory.}
     \label{fig:simple_factory}
   \end{figure}
@@ -201,13 +221,26 @@
     \item Easy to maintain. 
   \end{itemize}
 
-\section{Code}
-\label{sec:code}
+%\section{Code}
+%\label{sec:code}
 
 \section{Conclusion}
 \label{sec:conclusion}
+In this project, we develope a E-healthcare management system, which solves 
+the syncing problem between different health systems by using local and 
+central database, and facilitate most of the services by transfer them into 
+internet. Even more, we introduce the automatic disease detecters, which 
+is able to detect multiple diseases by leveraging the machine learning 
+techniques. 
+
+In technological aspect, we use object-oriented programming to shorten the 
+development time, and modularize the whole system into several parts, like 
+database, frontend, medium, and detecter (processor). With that, the system 
+is highly scalable and easy to maintain. 
 
 \section{Contribution}
 \label{sec:contribution}
+
+\texttt{B103040012} (Cheng-Han Hsieh, 謝承翰): the design of the whole architecture, database, paper report
 
 \end{document}
