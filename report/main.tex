@@ -44,6 +44,11 @@
 \usepackage{multicol}
 \usepackage{booktabs}
 \usepackage{dblfloatfix}
+\usepackage{listings}
+\usepackage{xparse}
+\lstset{language=C,keywordstyle={\bfseries \color{blue}}}
+
+\input macro.tex
 % ==========================
 
 \setCJKmainfont[Path=fonts/]{msjh.ttc} % 中文字型
@@ -77,48 +82,121 @@
 \section{Outline}
 \label{sec:outline}
 
-\begin{figure}[h]
-  \centering
-  \includegraphics[scale = 0.3]{asset/flowchart.png}
-  \caption{A simple example of outline.}
-  \label{fig:flowchart}
-\end{figure}
+  \begin{figure}[h]
+    \centering
+    \includegraphics[scale = 0.3]{asset/flowchart.png}
+    \caption{A simple example of outline.}
+    \label{fig:flowchart}
+  \end{figure}
 
 
 \section{Features}
 \label{sec:features}
 
-With this E-healthcare management system, the hospital/clinic can easily 
-sync the information of patients with other health systems, manage 
-the information of patients.
-For patients, the patient can do most of the things online, for example, 
-make a doctor appointment, look up the medical records and prescriptions, 
-and obtain the physical reports at home. Even more, the system use machine 
-learning to detect the abnormal data in the reports, notify the patient 
-to prevent the disease becoming worse. 
-To conclusion, the major features of the system can be summarized as 
-followings: 
-\begin{itemize}
-  \item Automatically sync the information of patients between different health systems by using local and central database. 
-  \item Facilitate the accessing of medical records and prescriptions, for both doctors and patients. 
-  \item Introduce the automatic disease detecters by leveraging machine learning and big data. 
-\end{itemize}
+  With this E-healthcare management system, the hospital/clinic can easily 
+  sync the information of patients with other health systems, manage 
+  the information of patients.
+  For patients, the patient can do most of the things online, for example, 
+  make a doctor appointment, look up the medical records and prescriptions, 
+  and obtain the physical reports at home. Even more, the system use machine 
+  learning to detect the abnormal data in the reports, notify the patient 
+  to prevent the disease becoming worse. 
+  To conclusion, the major features of the system can be summarized as 
+  followings: 
+  \begin{itemize}
+    \item Automatically sync the information of patients between different health systems by using local and central database. 
+    \item Facilitate the accessing of medical records and prescriptions, for both doctors and patients. 
+    \item Introduce the automatic disease detecters by leveraging machine learning and big data. 
+  \end{itemize}
 
 \section{Methodology}
 \label{sec:methodology}
-\subsection*{Database}
-\begin{figure}[h]
-  \centering
-  \includegraphics[scale = 0.7]{asset/DB_UML.png}
-  \caption{The UML of the whole database.}
-  \label{fig:DB_UML}
-\end{figure}
-\begin{figure}[h]
-  \centering
-  \includegraphics[scale = 0.7]{asset/simple_factory.png}
-  \caption{The UML of a simple factory.}
-  \label{fig:simple_factory}
-\end{figure}
+  \subsection*{Database}
+  \begin{figure}[h]
+    \centering
+    \includegraphics[scale = 0.7]{asset/database/DB_UML.png}
+    \caption{The UML of the whole database.}
+    \label{fig:DB_UML}
+  \end{figure}
+  \xfig{fig:DB_UML} shows the UML of the database. It can be divided into four 
+  parts, the class definition of patients' information, the database API, the 
+  class definition of database, and the database factory. 
+
+  \begin{figure}[h]
+    \centering
+    \includegraphics[scale = 0.7]{asset/database/pinfo.png}
+    \caption{The UML of the class definition of patient information.}
+    \label{fig:pinfo_UML}
+  \end{figure}
+  \xfig{fig:pinfo_UML} shows the class definition of the patients' information. 
+  The class, \codeword{patient\_info\_t}, contains the necessary information of 
+  a patient, for example, UID, name, birth date, and the list of medical records. 
+  And in the class, \codeword{med\_record\_t}, is date and reports, like diagnosis, 
+  prescriptions, and physical data and reports. 
+  In this part, it provides a definition of patients' information for the whole 
+  database. Later, the database will depend on the class defined in this part. 
+
+  \begin{figure}[h]
+    \centering
+    \includegraphics[scale = 0.7]{asset/database/DB_API.png}
+    \caption{The UML of the class definition of database API.}
+    \label{fig:API_UML}
+  \end{figure}
+  \xfig{fig:API_UML} is the definition of the API of the database. It provide 
+  some simple and secure methods to access the database, for example, load the 
+  information of a patient, update the information, and set the database. 
+  Later, those parts of the system that need to access the database rely on 
+  this API. 
+
+  \begin{figure}[h]
+    \centering
+    \includegraphics[scale = 0.5]{asset/database/database_instance.png}
+    \caption{The UML of the class definition of database instance.}
+    \label{fig:DB_instance}
+  \end{figure}
+  Here is the definition of the databases. First is an interface of the 
+  database, it defines some common methods of database, like connect, require, 
+  update, and sync with other database. 
+  Then are the specialized databases. Here, plain text database, SQLs are defined. 
+
+  The rationales behind the need of an interface is, in the early development, 
+  we did not determine which type of database should be use. And second, when 
+  scaling the system up, the database may need to be replaced with other databases 
+  that have higher throughput and lower response time, like ScyllaDB. 
+  An interface of the database solves the problems, because it abstracts the 
+  database and unify the methods. The additional databases can be easily provided 
+  by following the interface. 
+
+  \begin{figure}[h]
+    \centering
+    \includegraphics[scale = 0.7]{asset/database/factory_UML.png}
+    \caption{The UML of the factory of databases.}
+    \label{fig:factory_UML}
+  \end{figure}
+  The factory is responsible for instantiating the database. The factory is actually 
+  a pattern from \textit{Design Patterns}. 
+
+  \begin{figure}[h]
+    \centering
+    \includegraphics[scale = 0.7]{asset/database/simple_factory.png}
+    \caption{The UML of a simple factory.}
+    \label{fig:simple_factory}
+  \end{figure}
+  The general UML of factory pattern is shown in \xfig{fig:simple_factory}. The 
+  products inherit a common interface, and they are all instantiated by the factory. 
+  The advantage of factory patterns is it hides the details of ``creation'', which 
+  allows the factory changing the implementation without modifying the usage of the 
+  creation. It is a very import characteristics in developing a big system. The 
+  modification of the usage of methods can cost lots of time and effort, because 
+  all the programs that use the methods should be modified. 
+  
+  To conclusion, this design of database has the following features:
+  \begin{itemize}
+    \item Hide the detail of the creation. 
+    \item An uniform application interface. 
+    \item High Scalability. 
+    \item Easy to maintain. 
+  \end{itemize}
 
 \section{Code}
 \label{sec:code}
