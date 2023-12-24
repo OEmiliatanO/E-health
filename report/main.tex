@@ -46,6 +46,8 @@
 \usepackage{dblfloatfix}
 \usepackage{listings}
 \usepackage{xparse}
+\usepackage{hyperref}
+\usepackage{lmodern}
 \lstset{language=C,keywordstyle={\bfseries \color{blue}}}
 
 \input macro.tex
@@ -88,7 +90,7 @@
     \caption{A simple example of outline.}
     \label{fig:flowchart}
   \end{figure}
-
+  \xfig{fig:flowchart} shows the skelton of the whole system. 
 
 \section{Features}
 \label{sec:features}
@@ -173,8 +175,6 @@
     \caption{The UML of the factory of databases.}
     \label{fig:factory_UML}
   \end{figure}
-  The factory is responsible for instantiating the database. The factory is actually 
-  a pattern from \textit{Design Patterns}. 
 
   \begin{figure}[h]
     \centering
@@ -182,6 +182,9 @@
     \caption{The UML of a simple factory.}
     \label{fig:simple_factory}
   \end{figure}
+  Then is the factory of database, which shown in \xfig{fig:factory_UML}. 
+  In short, factory is responsible for instantiating the database. And it is actually 
+  a pattern from $\textit{Design Patterns}$. 
   The general UML of factory pattern is shown in \xfig{fig:simple_factory}. The 
   products inherit a common interface, and they are all instantiated by the factory. 
   The advantage of factory patterns is it hides the details of ``creation'', which 
