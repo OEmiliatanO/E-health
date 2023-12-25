@@ -1,0 +1,24 @@
+0001
+Jager
+01/01/2000,01:24:00
+11/30/2023,08:04:09
+1
+11/30/2023,08:04:09
+8
+BMI 0.000383673
+blood_sugar(mg/dL) 100
+body_fat_percentage 15
+estradiol(pg/mL) 10.2
+heart_rate(bpm) 65
+height(m) 1.88
+testosterone(ng/mL) 5.5
+weight(kg) 70
+[__START__]
+All numerical reports are in normal range.
+[__END__]
+[__START__]
+A normal person.
+[__END__]
+[__START__]
+Vitamin D tablet(10);calcium tablet(10);
+[__END__]

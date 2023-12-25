@@ -1,14 +1,14 @@
 CC:=g++
 CFLAG:=-Wall -Wextra -Werror -std=c++17 -I ./include/
-OBJ:=unit_test.o
+OBJ:=call_lab.o
 
-unit_test.elf: $(OBJ)
+call_lab.elf: $(OBJ)
 
 dep:
-	$(CC) -c unit_test.cpp $(CFLAG)
+	$(CC) -c call_lab.cpp $(CFLAG)
 
 all: $(OBJ)
-	$(CC) -o unit_test.elf unit_test.o
+	$(CC) -o call_lab.elf call_lab.o
 
 .PHONY: clean
 clean:
