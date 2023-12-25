@@ -7,7 +7,7 @@ try:
     from ..include.API import *
     from ..include.pinfo import med_record_t, patient_info_t
 except ImportError:
-    sys.path.append("../include")
+    sys.path.append(os.path.expanduser("~/ehealth/include"))
     from API import *
     from pinfo import med_record_t, patient_info_t
 
@@ -43,12 +43,12 @@ class User:
         self.allUsers.append(self)
     
     @staticmethod
-    def toJson(path="./data/users.json"): # 把 User 打包成Json
+    def toJson(path=os.path.expanduser("~/ehealth/linebot/data/users.json")): # 把 User 打包成Json
         with open(path, 'w') as file:
             json.dump([vars(user) for user in User.allUsers], file, indent=2)
     
     @staticmethod
-    def loadJson(path="./data/users.json"): # 把Json 轉入 allUsers
+    def loadJson(path=os.path.expanduser("~/ehealth/linebot/data/users.json")): # 把Json 轉入 allUsers
         User.allUsers.clear()
         with open(path, 'r') as file:
             data = json.load(file)
@@ -98,18 +98,18 @@ class Patient(User): # 不需要密碼，但需要身分資訊
         self.notes = notes
         self.appendUser()
 
-    def getInfo(self, path="../DB/central_DB") -> patient_info_t: # 謝承翰的UID為身分證字號(id_number)
+    def getInfo(self, path=os.path.expanduser("~/ehealth/DB/central_DB")) -> patient_info_t:
         api = DB_API()
         api.set_DB(DB_factory.create(DB_factory.plain_text_DB), path)
         info = api.load_info(self.id_number)
         return info
     
-    def createInfo(self, pinfo, path="../DB/central_DB") -> None: # 謝承翰的UID為身分證字號(id_number)
+    def createInfo(self, pinfo, path=os.path.expanduser("~/ehealth/DB/central_DB")) -> None:
         api = DB_API()
         api.set_DB(DB_factory.create(DB_factory.plain_text_DB), path)
         api.write_back(self.id_number, pinfo)
 
-    def detectLab(self, exe_file="../call_lab", dignose_file="../DB/diagnose/"):
+    def detectLab(self, exe_file=os.path.expanduser("~/ehealth/call_lab.elf"), dignose_file=os.path.expanduser("~/ehealth/DB/diagnose/")):
         cmd = exe_file+" "+dignose_file+self.id_number+".info"+" "+self.id_number
         os.system(cmd)
         sleep(0.1)
@@ -181,7 +181,7 @@ class Message:
         line_bot_api.push_message(self.sender.line_userid, messages=send_msg)
 
     @staticmethod
-    def toJson(path="./data/messages.json"): # 打包成Json，User的Obj是用line userid存
+    def toJson(path=os.path.expanduser("~/ehealth/linebot/data/messages.json")): # 打包成Json，User的Obj是用line userid存
         with open(path, 'w') as file:
             l = []
             for msg in Message.allMessage:
@@ -192,7 +192,7 @@ class Message:
             json.dump(l, file, indent=2)
     
     @staticmethod
-    def loadJson(path="./data/messages.json"): # 還原
+    def loadJson(path=os.path.expanduser("~/ehealth/linebot/data/messages.json")): # 還原
         Message.allMessage.clear()
         with open(path, 'r') as file:
             data = json.load(file)
@@ -242,7 +242,7 @@ class Reservation:
         Reservation.allReservation[self.time].append(self)
 
     @staticmethod
-    def toJson(path="./data/reservation.json"): # 打包成Json，User的Obj是用line userid存
+    def toJson(path=os.path.expanduser("~/ehealth/linebot/data/reservation.json")): # 打包成Json，User的Obj是用line userid存
         d = Reservation.allReservation.copy()
         with open(path, 'w') as file:
             for key in d.keys():
@@ -253,7 +253,7 @@ class Reservation:
             json.dump(d, file, indent=2)
     
     @staticmethod
-    def loadJson(path="./data/reservation.json"): # 同 Message
+    def loadJson(path=os.path.expanduser("~/ehealth/linebot/data/reservation.json")): # 同 Message
         Reservation.allReservation = {}
         with open(path, 'r') as file:
             data = json.load(file)
