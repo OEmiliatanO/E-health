@@ -101,8 +101,8 @@
   with doctor and he need to take a physical examination first. By insert the 
   ID card, the physical data will be recorded into the local database, syncing 
   with the central database, and in the mean time, the result of examination 
-  will be sended to ``auto-detecters'', which detect the abnormal data in the 
-  physical reports, and notify the patient. The auto-detecters can detect 
+  will be sended to ``auto-detectors'', which detect the abnormal data in the 
+  physical reports, and notify the patient. The auto-detectors can detect 
   potential diseases like cancer by determining the gene expression profiling, 
   or diabetes by the physical data. 
   The middle part is the situation that a patient or a doctor wants to obtain 
@@ -131,7 +131,7 @@
   \begin{itemize}
     \item Automatically sync the information of patients between different health systems by using local and central database. 
     \item Facilitate the accessing of medical records and prescriptions, for both doctors and patients. 
-    \item Introduce the automatic disease detecters by leveraging machine learning and big data. 
+    \item Introduce the automatic disease detectors by leveraging machine learning and big data. 
   \end{itemize}
 
 \section{Methodology}
@@ -318,6 +318,46 @@ some special member functions and attributes:
   \label{fig:uml_medium_and_doctor_gui}
 \end{figure}
 
+\subsubsection*{Preprocessor}
+
+\begin{itemize}
+    \item  The preprocessor is created with its checkers made with CheckerModule. Before any kind of preprocessor is created, one or more checkers should be created first by the programmer. The programmer should create checker based on the demand from the dotcor and under the rule of ChckerModule. The preprocessor is useful to preprocess the data, like fixing the wrong data based on the right data and existing formula, or deleting the NAN data and so on. Input the data into the preprocessor's preprocessing-specific function, data then be preprocessed. Modify or add the checker(s) into the preprocessor with checker-modifying function. When the data is preprocessed, the programmer can assume those data ready for detecting in the next part: Detector.(refer to Figure \ref{fig:pre_preprocessor}):
+    \begin{enumerate}[label=(\roman*)]
+        \item \codeword{preprocess\_last():} Preprocess the data in the last and newest profile stored in patient\_info.
+        \item \codeword{preprocess(x):} Preprocess the data the no.\codeword{x} profile stored in patient\_info.
+        \item \codeword{preprocess\_all():} Preprocess the data of all profiles stored in patient\_info.
+        \item \codeword{move\_checker(x):} Move the new checker "\codeword{x}" into the preprocessor.
+        \item \codeword{remove\_checker():} Remove the last moved checker from the preprocessor.
+        \item \codeword{clear\_checker():} Clear all the checkers from the preprocessor.
+    \end{enumerate}
+\end{itemize}
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[scale = 0.35]{asset/preprocessor_and_detector/PRE_preprocessor.png}
+  \caption{The UML of preprocessor and its composition: CheckerModule.}
+  \label{fig:pre_preprocessor}
+\end{figure}
+
+\subsubsection*{Detector}
+
+\begin{itemize}
+    \item  The meta\-detector is created with its detectors made with DetectorModule. Before any kind of meta\-detector is created, one or more detectors should be created first by the programmer. The programmer should create detector based on the demand from the dotcor and under the rule of DetectorModule. The meta-detector is used to detect the illness or abnormal value from the patient. The programmer can get the result from Detector\_Status in a general way, or list of strings that contains detailed information to be used in more specific situation.    (refer to Figure \ref{fig:pre_detector}):
+    \begin{enumerate}[label=(\roman*)]
+        \item \codeword{detect(Description,Status):} Detect the illness or abnormal value in the last and newest profile stored in patient\_info. \codeword{Description} contains list of string that stores more detailed information, and \codeword{Status} give an easy for programmer to verify the result. The detector do not support detecting for non-last profile, because it's without apparent cause.
+        \item \codeword{move\_detector(x):} Move the new detector "\codeword{x}" into the meta-detector.
+        \item \codeword{remove\_detector():} Remove the last moved detector from the meta-detector.
+        \item \codeword{clear\_detector():} Clear all the detector from the meta-detector.
+    \end{enumerate}
+\end{itemize}
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[scale = 0.35]{asset/preprocessor_and_detector/PRE_detector.png}
+  \caption{The UML of detector and its composition: DetectorModule. \newline The Detector\_status\_t is contained in the picture as well, which is used to present the status of the result.}
+  \label{fig:pre_detector}
+\end{figure}
+
 \section{Code}
 \label{sec:code}
 All the code can be found \href{https://github.com/OEmiliatanO/E-health}{here}.
@@ -327,13 +367,13 @@ All the code can be found \href{https://github.com/OEmiliatanO/E-health}{here}.
 In this project, we develope a E-healthcare management system, which solves 
 the syncing problem between different health systems by using local and 
 central database, and facilitate most of the services by transfer them into 
-internet. Even more, we introduce the automatic disease detecters, which 
+internet. Even more, we introduce the automatic disease detectors, which 
 is able to detect multiple diseases by leveraging the machine learning 
 techniques. 
 
 In technological aspect, we use object-oriented programming to shorten the 
 development time, and modularize the whole system into several parts, like 
-database, frontend, medium, and detecter (processor). With that, the system 
+database, frontend, medium, and detector (processor). With that, the system 
 is highly scalable and easy to maintain. 
 
 \section{Contribution}
