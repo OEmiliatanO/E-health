@@ -318,7 +318,7 @@ some special member functions and attributes:
   \label{fig:uml_medium_and_doctor_gui}
 \end{figure}
 
-\subsection*{Frontend(Doctor GUI)}
+\subsection*{Frontend(DoctorGUI)}
 
 \begin{figure}[h]
     \centering
@@ -422,7 +422,7 @@ The approach of Chat is very similar to that of Reservation. It will load the Me
 \begin{itemize}
   \item \codeword{check_mail():} Activated by clicking the summary of that message. It will call a subprocess and passing needed arguments such as sender, date, message. Then the subprocess will display these information by \codeword{MailDisplay}.
   \item \codeword{delete_mail():} Activated by the red fire button. Will delete message the button belongs to, then will call \codeword{fix_page()} to refresh the embedded page.
-  \item \codeword{delete_mail():} Activated by the yellow paper airplane button. It will also call a subprocess to let doctor write message to the sender. After pressing save button, the message will be send to the sender by using \codeword{reply} method that the mail have defined in medium(linebot)'s \codeword{Message}.
+  \item \codeword{reply_mail():} Activated by the yellow paper airplane button. It will also call a subprocess to let doctor write message to the sender. After pressing save button, the message will be send to the sender by using \codeword{reply} method that the mail have defined in medium(linebot)'s \codeword{Message}.
 \end{itemize}
 
 \subsubsection*{Prscribe_layout}
@@ -437,7 +437,7 @@ Doctors can create/attach prescribe information to speific patient such as assoc
 
 \begin{itemize}
   \item \codeword{update_scollview():} Activated by the preview button. Will load the textinput right of "Key Value:" text, process them into proper format and update the scroll window right of "Preview:" text. The reason to create such a function like this is cause associative values are strictly format, doctors can preview the result to check if there is something wrong by this method.
-  \item \codeword{delete_mail():} Activated by the red fire button. Will delete message the button belongs to, then will call \codeword{update_...()}: Several methods behave very similarly. Activated by the buttons below except the finish button. They all start a subprocess to allow doctors to edit data and store it in their corresponding attrubute.
+  \item \codeword{open_...():} Several methods behave very similarly. They all start a subprocess to allow doctors to edit data and store it in their corresponding attrubute.
   \item \codeword{finish():} After all the data has been edited, press the finish button to call. First, the function will search for the corresponding patient based on the entered UID. If it is found, it will directly load the patient's information (\codeword{patient_info_t}). If the patient cannot be found, the program will first ask the doctor to create a file for the patient. Next, save all the entered data into a new \codeword{reports_t} object, then save \codeword{reports_t} into a new \codeword{med_record_t} object, append the data into the \codeword{patient_info_t} object just loaded or created, and finally save the updated \codeword{patient_info_t} to database
 \end{itemize}
 
