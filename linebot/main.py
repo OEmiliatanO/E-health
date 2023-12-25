@@ -14,6 +14,7 @@ from kivy.lang import Builder
 from kivy.uix.scrollview import ScrollView
 
 import os
+import sys
 import signal
 
 import subprocess
@@ -30,7 +31,7 @@ try:
     from ..include.API import *
     from ..include.pinfo import med_record_t, patient_info_t
 except ImportError:
-    sys.path.append("../include")
+    sys.path.append(os.path.expanduser("~/ehealth/include"))
     from API import *
     from pinfo import med_record_t, patient_info_t
 

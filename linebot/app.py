@@ -8,9 +8,9 @@ import msg_templates
 import os
 import base64
 
-CHANNEL_SECRET = "904aca20c4045a8d34bb285cb96ead79"
-CHANNEL_ACCESS_TOKEN = "P4kyLQq9aSYYlMtpLEsSM4oD2bG3oMk8RfL29Baf2BUWLLRQMf/4QdKKam46fVQXpZeL3By9GzS8VZgjB0LTdvSTIOt8foBIt5cn0nyFgwkoZNq4r7bsewFuw0OIINgenaeQ/FvJYwd2XLZ+lzRq9wdB04t89/1O/w1cDnyilFU="
-WEBSITE = "https://6bdb-61-227-102-51.ngrok-free.app"
+CHANNEL_SECRET = "(fill this)" # your CHANNEL_SECRET here
+CHANNEL_ACCESS_TOKEN = "(fill this)" # your TOKEN here
+WEBSITE = "(fill this)" # your WEBSITE here
 RESPONSE_TEXT = """Thank you for reaching out to us. We appreciate your message. Unfortunately, we are unable to provide a specific response at this time.
 \nIf you have a medical concern or require assistance, please click on the \"Contact Doctor\" button for personalized support."""
 
