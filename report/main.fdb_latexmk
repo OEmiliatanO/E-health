@@ -1,10 +1,10 @@
 # Fdb version 4
-["xdvipdfmx"] 1703502221 "main.xdv" "main.pdf" "main" 1703502222 0
-  "main.xdv" 1703502221 138112 9ac2403e92f97c212756404ce90ad06a "xelatex"
+["xdvipdfmx"] 1703504107 "main.xdv" "main.pdf" "main" 1703504110 0
+  "main.xdv" 1703504106 204952 900d84e02e16b9b8ba6737170950c486 "xelatex"
   (generated)
   "main.pdf"
   (rewritten before read)
-["xelatex"] 1703502218 "c:/for_anything_that_dont_allow_chinese_in_path/oop/E-health/report/main.tex" "main.xdv" "main" 1703502222 0
+["xelatex"] 1703504103 "c:/for_anything_that_dont_allow_chinese_in_path/oop/E-health/report/main.tex" "main.xdv" "main" 1703504110 0
   "C:/for_anything_that_dont_allow_chinese_in_path/MikTeX/fonts/tfm/adobe/zapfding/pzdr.tfm" 1136743454 1528 7e12f4c0fcf5a072cebdcfbfc610f54c ""
   "C:/for_anything_that_dont_allow_chinese_in_path/MikTeX/fonts/tfm/public/amsfonts/symbols/msam10.tfm" 1233951854 916 f87d7c45f9c908e672703b83b72241a3 ""
   "C:/for_anything_that_dont_allow_chinese_in_path/MikTeX/fonts/tfm/public/amsfonts/symbols/msam5.tfm" 1233951854 924 9904cf1d39e9767e7a3622f2a125a565 ""
@@ -139,17 +139,27 @@
   "asset/database/factory_UML.png" 1703494481 13886 cc7a0f73bb55014b818a48826f433ece ""
   "asset/database/pinfo.png" 1703494481 25903 c4ab55f2897f4d6ac49ac40c0a1be55e ""
   "asset/database/simple_factory.png" 1703494481 35970 1934f39c0110ebb922a29e52655dc62d ""
+  "asset/doctor_gui/frontend_chat_browse.png" 1703502472 494636 108d20af7d9d32dbde47e116014905a1 ""
+  "asset/doctor_gui/frontend_chat_reply.png" 1703502472 13322 9500b1f640fd8d7f3d57b4f5de2a703b ""
+  "asset/doctor_gui/frontend_chat_show.png" 1703502472 1973065 79986c40ae5b1bf0c50a447ef83a59db ""
+  "asset/doctor_gui/frontend_main.png" 1703502472 362766 39ba6d35036741f174c7a516ebb3e5ea ""
+  "asset/doctor_gui/frontend_patient_info.png" 1703502472 15650 fc72d7591e43e1f9e64b0a36483f834a ""
+  "asset/doctor_gui/frontend_prescribe.png" 1703502472 136502 d86e7ca77454b06e7deab1cd9cf2e594 ""
+  "asset/doctor_gui/frontend_reservation_browse.png" 1703502472 122268 43da7e38b8c438999bb9b33a36a97c49 ""
+  "asset/doctor_gui/frontend_reservation_edit.png" 1703502472 147444 c4c09f33ea21fb6b3ef6aa517263b114 ""
+  "asset/doctor_gui/frontend_search_patient.png" 1703502472 144893 dbd26558d9aa55a674e74d0951adea82 ""
+  "asset/doctor_gui/frontend_uml.png" 1703502472 127742 fae78d6f0075315fe2d58f1651109dae ""
   "asset/flowchart.png" 1703494481 383910 828a16470344bae59e255f3e535ab5d3 ""
   "asset/frontend_and_medium/MED_usage_doctor_gui.png" 1703494481 44441 19619c9033490894e9a806f10e0f4a54 ""
   "asset/frontend_and_medium/MED_usage_processor_DB.png" 1703494481 56572 ac786cb12f4b6498bba11c9d7987a4ad ""
   "asset/frontend_and_medium/MED_whole.png" 1703494481 89855 884eb77d0c39d0a140c54434c323bc31 ""
   "asset/preprocessor_and_detector/PRE_detector.png" 1703497544 26666 0a0641a9417da06d00dde7c0d284eef6 ""
   "asset/preprocessor_and_detector/PRE_preprocessor.png" 1703496788 16292 9a60b0e9aa94e95c36950b7cb756e3a4 ""
-  "c:/for_anything_that_dont_allow_chinese_in_path/oop/E-health/report/main.tex" 1703502218 18526 06900bf826423fab034c64fb5a70f3a0 ""
+  "c:/for_anything_that_dont_allow_chinese_in_path/oop/E-health/report/main.tex" 1703504099 27038 84ec20a3183d0f14e3d3a834ded6ac91 ""
   "macro.tex" 1703494481 942 29e1ee40f2f509274d230868d1b27faa ""
-  "main.aux" 1703502221 5042 2feccbc98a56a1cc712b726df8d9e19e "xelatex"
-  "main.out" 1703502221 518 fedd2c541cfd9ae8581739ab8b6f85b4 "xelatex"
-  "main.tex" 1703502218 18526 06900bf826423fab034c64fb5a70f3a0 ""
+  "main.aux" 1703504106 7807 8632eb2b023794ec8af4e662cd8afae8 "xelatex"
+  "main.out" 1703504106 518 fedd2c541cfd9ae8581739ab8b6f85b4 "xelatex"
+  "main.tex" 1703504099 27038 84ec20a3183d0f14e3d3a834ded6ac91 ""
   (generated)
   "main.aux"
   "main.log"

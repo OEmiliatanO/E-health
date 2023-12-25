@@ -349,14 +349,140 @@ some special member functions and attributes:
         \item \codeword{remove\_detector():} Remove the last moved detector from the meta-detector.
         \item \codeword{clear\_detector():} Clear all the detector from the meta-detector.
     \end{enumerate}
+    \begin{figure}[H]
+      \centering
+      \includegraphics[scale = 0.35]{asset/preprocessor_and_detector/PRE_detector.png}
+      \caption{The UML of detector and its composition: DetectorModule. \newline The Detector\_status\_t is contained in the picture as well, which is used to present the status of the result.}
+      \label{fig:pre_detector}
+    \end{figure}
 \end{itemize}
+
+
+\subsection*{Frontend(DoctorGUI)}
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[scale = 0.5]{asset/doctor_gui/frontend_uml.png}
+    \caption{The UML of frontend.}
+    \label{fig:frontend_uml}
+  \end{figure}
+
+\subsubsection*{Abstract}
+The frontend, also can be called Doctor GUI, provide doctors with complete medical consultation functions such as :
+
+\begin{itemize}
+    \item Viewing patient information
+    \item Editing prescriptions
+    \item Replying to patient messages
+    \item Viewing and modifying patient reservation information
+\end{itemize}
+
+By Using this software, doctors can overcome space and time constraints. In addition to communicating with patients and making appointments in a timely manner, they can also synchronize all doctors' information in a timely manner, so that patients do not have to re-establish files every time they go to a hospital.
+
+The GUI mainly communicates with the database and medium (linebot), displays the data on the interface, and provides editing and deletion functions. 
+
+Next, I will explain in detail the method of each class and how they communicate with other classes.
+
+\subsubsection*{MainWidget and Design}
+\begin{figure}[h]
+    \centering
+    \includegraphics[scale = 0.5]{asset/doctor_gui/frontend_main.png}
+    \caption{This is the preview of Mainwidget. The doctor will switch to this page after successfully logging in, which vaguely represents the general architecture design of the entire front-end.}
+    \label{fig:frontend_main}
+\end{figure}
+\begin{itemize}
+    \item There is a row of buttons at the top. Press to switch pages. These buttons exists on every main page, allowing doctors to jump more conveniently.
+    \item There is a personal assistant in front of you. Press the dialog box and the assistant will talk to you. Currently, the conversations are random. If necessary in the future, you can communicate with other classes to implement functions similar to prompt notifications.
+\end{itemize}
+
+\subsubsection*{Mainpage}
+mainpage is a class mainly provides the function of switching the page, allowing other pages to inherit and increase the reuse rate of the program.
+
+\subsubsection*{Patient\_info\_layout}
+\begin{figure}[h]
+  \centering
+  \includegraphics[scale = 0.5]{asset/doctor_gui/frontend_search_patient.png}
+  \caption{The prview of patient\_info\_layout}
+  \label{fig:frontend_search_patient}
+\end{figure}
+The page firstly get input from textbox, and use \codeword{get\_info\_by\_id()} to call serials of methods in \codeword{patient\_info\_t} to load info of the patient the doctor wants to search. 
+Then, it will call \codeword{display\_info()} to open a subprocess and pass the patient's info it gets. The subprocess can use a describe object to present these info.
+\begin{figure}[h]
+  \centering
+  \includegraphics[scale = 0.5]{asset/doctor_gui/frontend_patient_info.png}
+  \caption{The prview of describe object}
+  \label{fig:frontend_patient_info}
+\end{figure}
+The describe object will firstly process the info by using \codeword{process\_info(String)}, put it into a suitable format and divide it into parts.
+Then, it will present these information by using a scoll window, there are buttons to go prev and next pages, each pages present individual part of informations it just processed by \codeword{process\_info(String)}.
+
+\subsubsection*{Reservation\_layout}
+\begin{figure}[h]
+  \centering
+  \includegraphics[scale = 0.5]{asset/doctor_gui/frontend_reservation_browse.png}
+  \caption{The\ prview\ of\ reservation\_layout}
+  \label{fig:frontend_reservation_browse}
+\end{figure}
 
 \begin{figure}[h]
   \centering
-  \includegraphics[scale = 0.35]{asset/preprocessor_and_detector/PRE_detector.png}
-  \caption{The UML of detector and its composition: DetectorModule. \newline The Detector\_status\_t is contained in the picture as well, which is used to present the status of the result.}
-  \label{fig:pre_detector}
+  \includegraphics[scale = 0.5]{asset/doctor_gui/frontend_reservation_edit.png}
+  \caption{The prview of EditResv}
+  \label{fig:frontend_reservation_edit}
 \end{figure}
+
+Reservation will load the reservation objects of medium (linebot), divide it into multiple pieces, store them as attributes, and display it in the main window as an embedded page. Each piece of data will display the name of the reservation person, reservation time, reservation time and remarks. The button below can call the prev\_page and next\_page methods to browse other reservation information.
+
+\begin{itemize}
+  \item \codeword{delete\_resv():} Activated by the red trash can button. Will delete reservation the button belongs to from its own attributes, then will call \codeword{fix\_page()} to refresh the embedded page.
+  \item \codeword{chg\_edit\_resv():} Activated by the yellow pen button. The method will change current page to \codeword{EditResv} class, doctor can edit the reservation the button belongs to. After press the save button the data will be stored to that reseravtion and called \codeword{change\_to\_Reservatoin()} to return to original page.
+\end{itemize}
+
+\subsubsection*{Chat\_layout}
+\begin{figure}[h]
+  \centering
+  \includegraphics[scale = 0.5]{asset/doctor_gui/frontend_chat_browse.png}
+  \caption{The prview of Chat\_layout}
+  \label{fig:frontend_chat_browse}
+\end{figure}
+The approach of Chat is very similar to that of Reservation. It will load the Message objects of medium (linebot), divide them into blocks, and display their summary on the embedded page. What is different from Reseravtion is the button part, which will be explained in detail below.
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[scale = 0.5]{asset/doctor_gui/frontend_chat_show.png}
+  \caption{The prview of MailDisplay}
+  \label{fig:frontend_chat_show}
+\end{figure}
+\begin{figure}[h]
+  \centering
+  \includegraphics[scale = 0.5]{asset/doctor_gui/frontend_chat_reply.png}
+  \caption{The prview of ReplyMail}
+  \label{fig:frontend_chat_reply}
+\end{figure}
+
+\begin{itemize}
+  \item \codeword{check\_mail():} Activated by clicking the summary of that message. It will call a subprocess and passing needed arguments such as sender, date, message. Then the subprocess will display these information by \codeword{MailDisplay}.
+  \item \codeword{delete\_mail():} Activated by the red fire button. Will delete message the button belongs to, then will call \codeword{fix\_page()} to refresh the embedded page.
+  \item \codeword{reply\_mail():} Activated by the yellow paper airplane button. It will also call a subprocess to let doctor write message to the sender. After pressing save button, the message will be send to the sender by using \codeword{reply} method that the mail have defined in medium(linebot)'s \codeword{Message}.
+\end{itemize}
+
+\subsubsection*{Prscribe\_layout}
+\begin{figure}[h]
+  \centering
+  \includegraphics[scale = 0.5]{asset/doctor_gui/frontend_prescribe.png}
+  \caption{The prview of Prescibe\_layout}
+  \label{fig:frontend_prescribe}
+\end{figure}
+
+Doctors can create/attach prescribe information to speific patient such as associative data, lab report or diagonosis. The following will introduce the functions of each method and button in detail.
+
+\begin{itemize}
+  \item \codeword{update\_scollview():} Activated by the preview button. Will load the textinput right of "Key Value:" text, process them into proper format and update the scroll window right of "Preview:" text. The reason to create such a function like this is cause associative values are strictly format, doctors can preview the result to check if there is something wrong by this method.
+  \item \codeword{open\_...():} Several methods behave very similarly. They all start a subprocess to allow doctors to edit data and store it in their corresponding attrubute.
+  \item \codeword{finish():} After all the data has been edited, press the finish button to call. First, the function will search for the corresponding patient based on the entered UID. If it is found, it will directly load the patient's information (\codeword{patient\_info\_t}). If the patient cannot be found, the program will first ask the doctor to create a file for the patient. Next, save all the entered data into a new \codeword{reports\_t} object, then save \codeword{reports\_t} into a new \codeword{med\_record\_t} object, append the data into the \codeword{patient\_info\_t} object just loaded or created, and finally save the updated \codeword{patient\_info\_t} to database
+\end{itemize}
+
+
 
 \section{Code}
 \label{sec:code}
@@ -381,5 +507,7 @@ is highly scalable and easy to maintain.
 
 \texttt{B103040012} (Cheng-Han Hsieh, 謝承翰): the design of the whole architecture, database, paper report
 \texttt{B103040001} (Shih-Yu Sun, 孫世諭): medium, frontend, linebot, coordination and communication, paper report
+\texttt{B103040051} (Chia-Huang, 黃嘉彥): Doctor GUI(include design, data process, images, code) paper report
+\texttt{B103040008} (Ting-Hao Hsu, 許廷豪): Preprocessor and Detector, paper report
 
 \end{document}
