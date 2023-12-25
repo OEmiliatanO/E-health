@@ -57,9 +57,11 @@
 \setCJKmainfont[Path=fonts/]{msjh.ttc} % 中文字型
 \setCJKmonofont[Path=fonts/]{msjh.ttc} % 中文等寬字型
 
+\hypersetup{colorlinks=true, linkcolor=blue}
+
 \begin{document}
 
-\title{E-Healthcare Management System}
+\title{Group 4: E-Healthcare Management System}
 \author{
   Cheng-Han Hsieh, 謝承翰\\
   \texttt{B103040012}
@@ -229,12 +231,13 @@
 
 \begin{figure}[h]
   \centering
-  \includegraphics[scale = 0.5]{asset/frontend_and_medium/MED_whole.png}
+  \includegraphics[scale = 0.45]{asset/frontend_and_medium/MED_whole.png}
   \caption{The UML of frontend and medium.}
   \label{fig:uml_frontend_and_medium}
 \end{figure}
 
-In the code for the patient frontend and middleware, our functionalities are as follows (refer to Figure \ref{fig:uml_frontend_and_medium}):
+In the code for the patient frontend and middleware, our functionalities 
+are as follows (refer to Figure \ref{fig:uml_frontend_and_medium}):
 
 \begin{enumerate}[label=\arabic*.]
     \item Utilize Ngrok to forward external requests to the locally specified port.
@@ -253,7 +256,8 @@ In the code for the patient frontend and middleware, our functionalities are as 
     \end{enumerate}
 \end{enumerate}
 
-Next, we will explain each class in the frontend and medium, highlighting some special member functions and attributes:
+Next, we will explain each class in the frontend and medium, highlighting 
+some special member functions and attributes:
 
 \subsubsection*{User}
 
@@ -277,7 +281,7 @@ Next, we will explain each class in the frontend and medium, highlighting some s
 
 \begin{figure}[h]
   \centering
-  \includegraphics[scale = 0.5]{asset/frontend_and_medium/MED_usage_processor_DB.png}
+  \includegraphics[scale = 0.35]{asset/frontend_and_medium/MED_usage_processor_DB.png}
   \caption{The UML of interaction between medium, preprocessor and database.}
   \label{fig:uml_medium_preprocessor_database}
 \end{figure}
@@ -309,10 +313,14 @@ Next, we will explain each class in the frontend and medium, highlighting some s
 
 \begin{figure}[h]
   \centering
-  \includegraphics[scale = 0.5]{asset/frontend_and_medium/MED_usage_doctor_gui.png}
+  \includegraphics[scale = 0.35]{asset/frontend_and_medium/MED_usage_doctor_gui.png}
   \caption{The UML of interaction between medium and Doctor GUI.}
   \label{fig:uml_medium_and_doctor_gui}
 \end{figure}
+
+\section{Code}
+\label{sec:code}
+All the code can be found \href{https://github.com/OEmiliatanO/E-health}{here}.
 
 \section{Conclusion}
 \label{sec:conclusion}
