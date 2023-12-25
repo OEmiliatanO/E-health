@@ -8,3 +8,7 @@ __pycache__
 *.log
 *.gz
 *.pyc
+*.fdb_latexmk
+*.fls
+*.log
+*.xdv
