@@ -308,7 +308,7 @@ attributes:
 \begin{itemize}
     \item When a patient uses the frontend LineBot to send a message, a Message object is created. It is used, replied to, and deleted by the Doctor GUI and includes Patient and Doctor objects to determine the patient and the doctor being messaged (refer to Figure \ref{fig:uml_medium_and_doctor_gui}):
     \begin{enumerate}[label=(\roman*)]
-        \item \codeword{reply():} Based on its own Patient object, it uses LineBot to send a message back to the patient (because the Patient object contains the line\_id attribute).
+        \item \codeword{reply():} Based on its own Patient object, it uses LineBot to send a message back to the patient (because the Patient object contains the line\_id attribute). You can see the demo at Figure \ref{fig:linebot_msg}
     \end{enumerate}
 \end{itemize}
 
@@ -560,6 +560,13 @@ In technological aspect, we use object-oriented programming to shorten the
 development time, and modularize the whole system into several parts, like 
 database, frontend, medium, and detector (processor). With that, the system 
 is highly scalable and easy to maintain. 
+
+\begin{figure}[ht]
+  \centering
+  \includegraphics[scale = 0.5]{asset/frontend_and_medium/linebot2.png}
+  \caption{The demo of frontend(Line bot).}
+  \label{fig:linebot_msg}
+\end{figure}
 
 \section{Contribution}
 \label{sec:contribution}
